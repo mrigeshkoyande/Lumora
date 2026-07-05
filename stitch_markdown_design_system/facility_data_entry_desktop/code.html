@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Arogya OS - Facility Data Entry</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "outline": "#6f7882",
+                        "on-error-container": "#93000a",
+                        "primary-container": "#3ab5ff",
+                        "surface-container-highest": "#d7e5e6",
+                        "surface-container": "#e3f1f2",
+                        "outline-variant": "#bec8d2",
+                        "inverse-on-surface": "#e5f3f4",
+                        "tertiary-fixed": "#b0edef",
+                        "on-primary-fixed-variant": "#004b71",
+                        "secondary": "#00696e",
+                        "surface-variant": "#d7e5e6",
+                        "on-secondary-fixed-variant": "#004f53",
+                        "on-primary-fixed": "#001e30",
+                        "on-primary": "#ffffff",
+                        "secondary-container": "#80f1f9",
+                        "on-secondary-fixed": "#002022",
+                        "inverse-surface": "#263334",
+                        "surface-dim": "#cfddde",
+                        "secondary-fixed": "#83f4fc",
+                        "on-background": "#111e1f",
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#cbe6ff",
+                        "on-secondary-container": "#006e73",
+                        "on-primary-container": "#004466",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#e8f6f7",
+                        "inverse-primary": "#8ecdff",
+                        "error-container": "#ffdad6",
+                        "surface-container-high": "#ddebec",
+                        "secondary-fixed-dim": "#64d7df",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#3e4851",
+                        "primary-fixed-dim": "#8ecdff",
+                        "on-tertiary-container": "#00484a",
+                        "primary": "#006494",
+                        "surface-tint": "#006494",
+                        "on-tertiary-fixed-variant": "#034f51",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#eefcfd",
+                        "on-surface": "#111e1f",
+                        "tertiary-container": "#7ab6b8",
+                        "background": "#eefcfd",
+                        "surface": "#eefcfd",
+                        "on-tertiary-fixed": "#002021",
+                        "tertiary": "#286769",
+                        "tertiary-fixed-dim": "#94d1d3",
+                        "surface-container-lowest": "#ffffff"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "gutter": "24px",
+                        "container-max": "1280px",
+                        "unit": "4px",
+                        "margin-desktop": "64px",
+                        "margin-mobile": "16px"
+                    },
+                    fontFamily: {
+                        "body-md": ["Inter", "sans-serif"],
+                        "headline-lg-mobile": ["Inter", "sans-serif"],
+                        "headline-lg": ["Inter", "sans-serif"],
+                        "display-lg": ["Inter", "sans-serif"],
+                        "label-sm": ["Inter", "sans-serif"]
+                    },
+                    fontSize: {
+                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "headline-lg-mobile": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+                        "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "600" }],
+                        "display-lg": ["56px", { lineHeight: "64px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "label-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            /* Liquid Glass Gradient Background */
+            background-color: #eefcfd; /* surface */
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(131, 244, 252, 0.15) 0%, transparent 50%), /* secondary-fixed */
+                radial-gradient(circle at 85% 30%, rgba(203, 230, 255, 0.2) 0%, transparent 50%); /* primary-fixed */
+            background-attachment: fixed;
+        }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .glass-input {
+            background: rgba(227, 241, 242, 0.5); /* surface-container */
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        /* Ensure Material Symbols look correct */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface antialiased min-h-screen flex selection:bg-primary-container selection:text-on-primary-container">
+<!-- SideNavBar (Shared Component) -->
+<!-- Applying style_component_shape, style_bg_color, style_separation_logic, style_shell_layout -->
+<nav class="h-screen sticky left-0 top-0 bg-surface-container/30 dark:bg-surface-container-high/30 backdrop-blur-2xl border-r border-white/10 dark:border-outline-variant/10 hidden lg:flex flex-col w-64 p-4 gap-4 z-40">
+<!-- Header -->
+<div class="flex items-center gap-3 px-4 py-2 mb-4">
+<div class="w-10 h-10 rounded-full bg-primary-container/30 flex items-center justify-center overflow-hidden border border-white/20">
+<img class="w-full h-full object-cover" data-alt="A macro shot of a subtle, abstract medical cross symbol etched in frosted glass, illuminated by soft blue light, professional healthcare aesthetic, highly detailed." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyraczzTMxogoml1IPbwp9hZZRveyHEDaXmon13Z2CVU_JWndiecPw5ey3dNSuGOTo0arNEio_8mfk4LfoNooekmhfreaci5ZwezpRuK-I97NdU5rnFPfnljOQnJ9hwsgMmSuSqTL_bonqInNpcR3jQktZJz0GmpJrO_pLG3jucGTI-nR1a6Ag_8pGkkBfa9iWDzpnCjBm_zz_uJFLELwIVYl4fm4d7kdbWcW3jhkFgoXhOf8u9PvDnZQKwhXlj33DfbrqJSJEv8U"/>
+</div>
+<div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile font-black text-primary truncate">Facility Alpha</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant truncate">Staff Portal</p>
+</div>
+</div>
+<!-- Navigation Tabs -->
+<div class="flex flex-col gap-1 flex-grow">
+<!-- Active Tab: Stock Count -->
+<!-- Applying style_active_navigation, style_universal_hover, style_interactions, style_primary_color context -->
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container/40 dark:bg-primary-fixed-dim/20 text-on-primary-container dark:text-primary-fixed-dim rounded-lg hover:bg-primary-container/20 transition-all duration-300 ease-in-out font-label-sm text-label-sm md:font-body-md md:text-body-md group" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span>Stock Count</span>
+</a>
+<!-- Inactive Tabs -->
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-outline rounded-lg hover:bg-primary-container/20 dark:hover:bg-white/5 transition-all duration-300 ease-in-out font-label-sm text-label-sm md:font-body-md md:text-body-md group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">groups</span>
+<span>Footfall</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-outline rounded-lg hover:bg-primary-container/20 dark:hover:bg-white/5 transition-all duration-300 ease-in-out font-label-sm text-label-sm md:font-body-md md:text-body-md group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">badge</span>
+<span>Attendance</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-outline rounded-lg hover:bg-primary-container/20 dark:hover:bg-white/5 transition-all duration-300 ease-in-out font-label-sm text-label-sm md:font-body-md md:text-body-md group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">cloud_sync</span>
+<span>Sync Center</span>
+</a>
+</div>
+<!-- CTA & Footer -->
+<div class="mt-auto flex flex-col gap-4">
+<button class="w-full py-3 px-4 rounded-xl bg-secondary text-on-secondary font-label-sm text-label-sm flex items-center justify-center gap-2 hover:bg-on-secondary-container hover:text-white transition-colors shadow-sm">
+<span class="material-symbols-outlined">mic</span>
+                Voice Entry
+            </button>
+<div class="h-px w-full bg-white/20 dark:bg-outline-variant/20"></div>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline rounded-lg hover:bg-primary-container/20 transition-all duration-300 font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined text-[18px]">settings</span>
+<span>Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline rounded-lg hover:bg-primary-container/20 transition-all duration-300 font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined text-[18px]">help</span>
+<span>Support</span>
+</a>
+</div>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<main class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden relative">
+<!-- TopNavBar (Shared Component) -->
+<!-- Applying style_component_shape, style_bg_color, style_separation_logic, style_shadows_and_elevation, style_shell_layout -->
+<header class="w-full sticky top-0 z-50 bg-surface/40 dark:bg-surface-container/40 backdrop-blur-3xl border-b border-white/20 dark:border-outline-variant/20 shadow-[0_4px_30px_rgba(0,0,0,0.1)] flex justify-between items-center px-gutter py-4 max-w-container-max mx-auto">
+<div class="flex items-center gap-4">
+<!-- Mobile menu trigger (hidden on desktop per prompt scope, but good practice to include structure) -->
+<button class="lg:hidden p-2 text-on-surface-variant rounded-full hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-headline-lg text-headline-lg font-bold text-primary dark:text-primary-fixed-dim tracking-tight">Arogya OS</h1>
+</div>
+<!-- Search Bar Hidden per JSON `search_bar: "hidden"` -->
+<!-- Trailing Icons -->
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant dark:text-outline hover:bg-white/10 dark:hover:bg-black/10 transition-colors rounded-full active:scale-95 duration-200" title="translate">
+<span class="material-symbols-outlined">translate</span>
+</button>
+<button class="p-2 text-on-surface-variant dark:text-outline hover:bg-white/10 dark:hover:bg-black/10 transition-colors rounded-full active:scale-95 duration-200" title="sync">
+<span class="material-symbols-outlined">sync</span>
+</button>
+<button class="p-2 text-on-surface-variant dark:text-outline hover:bg-white/10 dark:hover:bg-black/10 transition-colors rounded-full active:scale-95 duration-200" title="account_circle">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Content Area -->
+<div class="flex-1 overflow-y-auto px-4 py-8 lg:p-margin-desktop relative no-scrollbar">
+<!-- Centered Wide Glass Card -->
+<div class="max-w-[800px] mx-auto w-full flex flex-col gap-8 pb-32">
+<!-- 1. Sync Status Banner -->
+<div class="flex justify-center w-full">
+<div class="glass-panel rounded-full px-5 py-2.5 inline-flex items-center gap-3 text-on-surface-variant font-label-sm text-label-sm">
+<div class="w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<span>All entries synced (32m ago)</span>
+<div class="w-px h-4 bg-outline-variant/30 mx-1"></div>
+<button class="text-primary hover:text-primary-container transition-colors flex items-center">
+<span class="material-symbols-outlined text-[18px]">refresh</span>
+</button>
+</div>
+</div>
+<!-- Main Glass Container -->
+<div class="glass-panel rounded-xl p-6 lg:p-8 flex flex-col gap-10">
+<!-- 2. Stock Entry Section -->
+<section class="flex flex-col gap-5">
+<header class="flex flex-col">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Stock Entry</h2>
+<span class="font-label-sm text-label-sm text-on-surface-variant opacity-70">स्टॉक प्रविष्टि</span>
+</header>
+<!-- Search -->
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full glass-input rounded-xl py-3 pl-12 pr-4 font-body-md text-body-md text-on-surface placeholder:text-outline-variant focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all" placeholder="Search SKU..." type="text"/>
+</div>
+<!-- SKU List -->
+<div class="flex flex-col gap-4">
+<!-- Item 1 -->
+<div class="bg-surface-container-lowest/40 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border border-white/20">
+<div class="flex flex-col">
+<span class="font-headline-lg-mobile text-[18px] font-semibold text-on-surface">Paracetamol 500mg</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">पैरासिटामोल 500mg</span>
+</div>
+<div class="flex items-center gap-3">
+<!-- Stepper -->
+<div class="flex items-center bg-surface-container/60 rounded-lg p-1 border border-white/30">
+<button class="w-10 h-10 flex items-center justify-center rounded-md hover:bg-white/50 text-on-surface-variant active:scale-95 transition-all">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<input class="w-16 text-center bg-transparent border-none font-display-lg text-[20px] font-semibold text-on-surface tabular-nums p-0 focus:ring-0" type="text" value="142"/>
+<button class="w-10 h-10 flex items-center justify-center rounded-md hover:bg-white/50 text-on-surface-variant active:scale-95 transition-all">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<!-- Voice Input active -->
+<button class="w-12 h-12 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shadow-sm relative overflow-hidden group">
+<span class="material-symbols-outlined z-10" style="font-variation-settings: 'FILL' 1;">mic</span>
+<div class="absolute inset-0 bg-white/20 animate-pulse"></div>
+</button>
+</div>
+</div>
+<!-- Live Transcription Preview -->
+<div class="px-4 py-2 bg-inverse-on-surface/50 rounded-lg flex items-center gap-2 border border-outline-variant/20">
+<span class="material-symbols-outlined text-[16px] text-tertiary animate-pulse">graphic_eq</span>
+<span class="font-body-md text-[14px] italic text-on-surface-variant">"Add fifteen strips..."</span>
+</div>
+<!-- Item 2 -->
+<div class="bg-surface-container-lowest/40 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border border-white/20">
+<div class="flex flex-col">
+<span class="font-headline-lg-mobile text-[18px] font-semibold text-on-surface">Amoxicillin 250mg</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">अमोक्सिसिलिन 250mg</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center bg-surface-container/60 rounded-lg p-1 border border-white/30">
+<button class="w-10 h-10 flex items-center justify-center rounded-md hover:bg-white/50 text-on-surface-variant active:scale-95 transition-all">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<input class="w-16 text-center bg-transparent border-none font-display-lg text-[20px] font-semibold text-on-surface tabular-nums p-0 focus:ring-0" type="text" value="85"/>
+<button class="w-10 h-10 flex items-center justify-center rounded-md hover:bg-white/50 text-on-surface-variant active:scale-95 transition-all">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<button class="w-12 h-12 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center hover:bg-surface-variant transition-colors border border-white/30">
+<span class="material-symbols-outlined">mic</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<div class="h-px w-full bg-outline-variant/20"></div>
+<!-- 3. Footfall Entry -->
+<section class="flex flex-col gap-5">
+<header class="flex flex-col">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Daily Patient Count</h2>
+<span class="font-label-sm text-label-sm text-on-surface-variant opacity-70">दैनिक रोगी गणना</span>
+</header>
+<div class="glass-input rounded-2xl p-6 border border-white/40 flex items-center justify-center">
+<input class="bg-transparent border-none text-center font-display-lg text-[64px] font-bold text-primary tabular-nums p-0 w-full focus:ring-0 placeholder:text-outline-variant" placeholder="0" type="number" value="218"/>
+</div>
+</section>
+<div class="h-px w-full bg-outline-variant/20"></div>
+<!-- 4. Attendance Roster -->
+<section class="flex flex-col gap-5">
+<header class="flex flex-col">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Staff Attendance</h2>
+<span class="font-label-sm text-label-sm text-on-surface-variant opacity-70">कर्मचारी उपस्थिति</span>
+</header>
+<div class="flex flex-col gap-3">
+<!-- Staff 1 -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-3 bg-white/20 rounded-xl border border-white/30">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-tertiary-container/40 flex items-center justify-center text-on-tertiary-container font-bold text-[18px]">
+                                        RA
+                                    </div>
+<div class="flex flex-col">
+<span class="font-body-md font-semibold text-on-surface">Rahul Sharma</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Pharmacist</span>
+</div>
+</div>
+<div class="flex bg-surface-container/50 rounded-lg p-1 border border-white/20">
+<button class="px-4 py-2 rounded-md bg-secondary text-on-secondary font-label-sm text-label-sm shadow-sm transition-all">Present</button>
+<button class="px-4 py-2 rounded-md text-on-surface-variant hover:bg-white/40 font-label-sm text-label-sm transition-all">Absent</button>
+<button class="px-4 py-2 rounded-md text-on-surface-variant hover:bg-white/40 font-label-sm text-label-sm transition-all">Leave</button>
+</div>
+</div>
+<!-- Staff 2 -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-3 bg-white/20 rounded-xl border border-white/30">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-primary-container/40 flex items-center justify-center text-on-primary-container font-bold text-[18px]">
+                                        PM
+                                    </div>
+<div class="flex flex-col">
+<span class="font-body-md font-semibold text-on-surface">Priya Menon</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Nurse (OPD)</span>
+</div>
+</div>
+<div class="flex bg-surface-container/50 rounded-lg p-1 border border-white/20">
+<button class="px-4 py-2 rounded-md text-on-surface-variant hover:bg-white/40 font-label-sm text-label-sm transition-all">Present</button>
+<button class="px-4 py-2 rounded-md bg-error text-on-error font-label-sm text-label-sm shadow-sm transition-all">Absent</button>
+<button class="px-4 py-2 rounded-md text-on-surface-variant hover:bg-white/40 font-label-sm text-label-sm transition-all">Leave</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+<!-- 5. Submit Bar -->
+<div class="absolute bottom-0 left-0 w-full glass-panel border-t-0 border-white/30 p-4 lg:p-6 flex justify-end z-40" style="backdrop-filter: blur(40px);">
+<div class="max-w-[800px] w-full mx-auto flex justify-between items-center px-4 lg:px-0">
+<span class="text-on-surface-variant font-label-sm text-label-sm opacity-70">Unsaved changes</span>
+<button class="bg-secondary text-on-secondary px-8 py-4 rounded-xl font-label-sm text-[14px] uppercase tracking-wider font-bold shadow-lg hover:bg-on-secondary-container hover:shadow-xl active:scale-95 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">cloud_upload</span>
+                    Save &amp; Sync
+                </button>
+</div>
+</div>
+</main>
+<style>
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</body></html>
