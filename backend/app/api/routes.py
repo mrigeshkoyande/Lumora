@@ -10,11 +10,13 @@ from app.schemas import AnalyzeResponse, GeoResponse, SurveillanceRequest
 from app.services.analysis import AnalysisService
 from app.services.external import ExternalService
 from app.services.notification import NotificationService
+from app.services.inventory_agent import InventoryOrchestrator
 
 router = APIRouter()
 external_service = ExternalService()
 analysis_service = AnalysisService(external_service)
 notification_service = NotificationService()
+inventory_orchestrator = InventoryOrchestrator()
 
 
 @router.get("/health", tags=["health"], summary="Health check")
@@ -57,7 +59,25 @@ async def analyze(req: SurveillanceRequest):
             "model": "llama-3.1-8b-instant",
         },
     }
-    logger.info("Analyze request completed for location=%s", req.location)
+    
+    # Save the entire response in a proper UI/UX report friendly way for further play
+    import os
+    os.makedirs("saved_reports", exist_ok=True)
+    report_filename = f"saved_reports/analysis_{req.location.replace(' ', '_')}_{int(datetime.utcnow().timestamp())}.md"
+    
+    with open(report_filename, "w", encoding="utf-8") as f:
+        f.write(f"# Analysis Report for {req.location}\n\n")
+        f.write(f"**Generated At:** {payload['meta']['requested_at']}\n")
+        f.write(f"**Location Data:** `{json.dumps(geo)}`\n\n")
+        f.write("## Report Summary\n")
+        if isinstance(report, dict) and "error" not in report:
+            f.write("```json\n")
+            f.write(json.dumps(report, indent=4))
+            f.write("\n```\n")
+        else:
+            f.write(str(report) + "\n")
+            
+    logger.info("Analyze request completed for location=%s. Report saved to %s", req.location, report_filename)
     return payload
 
 
@@ -143,3 +163,18 @@ async def webhook_alert(req: SurveillanceRequest):
         "sms_dispatch": sms_result,
         "timestamp": datetime.utcnow().isoformat() + "Z",
     }
+
+
+@router.get("/inventory/poll", tags=["inventory"], summary="Poll inventory data and generate AI insights for low stock")
+async def poll_inventory():
+    logger.info("Polling inventory data requested via API")
+    try:
+        report = await asyncio.to_thread(inventory_orchestrator.poll_once)
+        return {
+            "status": "success",
+            "timestamp": datetime.utcnow().isoformat() + "Z",
+            "data": report
+        }
+    except Exception as exc:
+        logger.warning("Failed to poll inventory: %s", str(exc))
+        raise HTTPException(status_code=500, detail=str(exc))
