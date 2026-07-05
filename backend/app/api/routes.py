@@ -9,10 +9,12 @@ from app.config import logger
 from app.schemas import AnalyzeResponse, GeoResponse, SurveillanceRequest
 from app.services.analysis import AnalysisService
 from app.services.external import ExternalService
+from app.services.notification import NotificationService
 
 router = APIRouter()
 external_service = ExternalService()
 analysis_service = AnalysisService(external_service)
+notification_service = NotificationService()
 
 
 @router.get("/health", tags=["health"], summary="Health check")
@@ -113,4 +115,31 @@ def snapshot(location: str):
         "weather_aqi": weather_data,
         "health_news": news_data,
         "snapshot_time": datetime.utcnow().isoformat() + "Z",
+    }
+
+
+@router.post("/webhook/alert", tags=["webhook"], summary="Trigger autonomous AI analysis and SMS alert")
+async def webhook_alert(req: SurveillanceRequest):
+    logger.info("Webhook alert triggered for location=%s", req.location)
+    try:
+        geo = external_service.geocode_location(req.location)
+    except ValueError as exc:
+        logger.warning("Webhook geocoding failed: %s", str(exc))
+        raise HTTPException(status_code=404, detail=str(exc))
+
+    # 1. Run AI Analysis
+    try:
+        report = await asyncio.to_thread(analysis_service.generate_direct_analysis, geo, req.location, req.time_frame)
+    except Exception as exc:
+        logger.warning("Webhook AI analysis failed: %s", str(exc))
+        raise HTTPException(status_code=500, detail="AI Analysis failed")
+
+    # 2. Dispatch SMS Alert
+    sms_result = await asyncio.to_thread(notification_service.dispatch_alert, report)
+
+    return {
+        "status": "success",
+        "location": geo,
+        "sms_dispatch": sms_result,
+        "timestamp": datetime.utcnow().isoformat() + "Z",
     }

@@ -22,6 +22,10 @@ class Settings:
     groq_api_key: str = os.getenv("GROQ_API_KEY", "")
     groq_model: str = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
     groq_api_base: str = "https://api.groq.com/openai/v1/chat/completions"
+    twilio_account_sid: str = os.getenv("TWILIO_ACCOUNT_SID", "")
+    twilio_auth_token: str = os.getenv("TWILIO_AUTH_TOKEN", "")
+    twilio_from_number: str = os.getenv("TWILIO_FROM_NUMBER", "")
+    twilio_to_number: str = os.getenv("TWILIO_TO_NUMBER", "")
 
 
 settings = Settings()
