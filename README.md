@@ -34,11 +34,12 @@ code_for_communities/
 
 ## ⚡ Key Features
 
-*   **Location Geocoding**: Automatically translates city or region search strings to exact latitude and longitude coordinates.
+*   **Time-Range Specific Analysis**: Users can pass a `time_frame` parameter to focus the analysis on specific periods (e.g., "Next 48 Hours" or "Durga Puja Week").
 *   **Environmental Monitoring**: Fetches real-time temperature, humidity, wind conditions, and a detailed Air Quality Index (AQI) with gas concentrations (PM2.5, PM10, CO, NO2, O3).
-*   **Public Health Signal Gathering**: Scans recent news for localized keywords targeting disease outbreaks, respiratory illnesses, and official public health alerts.
-*   **Multi-Agent Reasoning**: Simulates a multi-agent review (consisting of the *Signal Collector*, *Festival Surge Anticipator*, and *Pollution Risk Agent*) to assess risks, identify compound threats, and formulate immediate recommended actions.
-*   **Server-Sent Progress Streaming (NDJSON)**: Provides real-time execution feedback to the frontend as data is gathered and analyzed, preventing UI timeouts during longer agent runs.
+*   **Contextual Event Gathering**: Scans recent news for localized keywords targeting disease outbreaks, respiratory illnesses, and festival/surge events.
+*   **Hospital Infrastructure Integration**: Dynamically reads local hospital infrastructure data (from `D60. Zonewise Hospital Coverage.csv`) to track beds and medicinal stock availability anonymously.
+*   **Actionable Multi-Agent Reasoning**: Simulates an expert AI panel to generate early stock-out warnings, demand forecasts, and smart resource redistribution recommendations across PHCs/CHCs, flagging under-resourced centers.
+*   **Accuracy & Telemetry**: Returns an `accuracy_confidence_score` and explicit `data_sources_used` to guarantee transparency in AI decision-making.
 
 ---
 
@@ -83,7 +84,8 @@ code_for_communities/
 *   **Request Body**:
     ```json
     {
-      "location": "Mumbai, India"
+      "location": "Mumbai",
+      "time_frame": "Next 7 Days"
     }
     ```
 *   **Response**:
@@ -97,19 +99,47 @@ code_for_communities/
         "lon": 72.8777
       },
       "report": {
-        "location": {"city": "Mumbai", "country": "IN"},
+        "location": "Mumbai, IN",
         "generated_at": "2026-07-05T11:15:00.000Z",
-        "executive_summary": "High particulate matter combined with warm weather poses mild risks...",
-        "overall_risk_level": "moderate",
-        "signal_assessment": {"status": "nominal"},
-        "festival_surge_forecast": {"status": "low_risk"},
-        "pollution_risk": {"status": "elevated", "main_pollutant": "PM2.5"},
-        "compound_risks": ["Synergistic effect of humidity and high particulate levels on asthma patients"],
-        "recommended_actions": [
-          "Advise sensitive groups to wear masks outdoors",
-          "Ensure local clinics prepare respiratory nebulizers"
+        "executive_summary": "High patient footfall expected due to festivals, creating moderate risks for under-resourced zones.",
+        "stock_out_warnings": [
+          {
+            "zone": "Manali",
+            "item": "Medicines",
+            "quantity": 36,
+            "threshold": 50
+          }
         ],
-        "data_sources": ["OpenWeatherMap", "NewsAPI"]
+        "demand_forecasts": {
+          "zone": "Thiruvottiyur",
+          "demand": 150,
+          "confidence": 0.8
+        },
+        "redistribution_recommendations": [
+          {
+            "zone": "Ambattur",
+            "item": "Stock",
+            "quantity": 10,
+            "destination": "Manali"
+          }
+        ],
+        "flagged_centres": [
+          {
+            "zone": "Manali",
+            "reason": "Low bed availability (36 beds)"
+          }
+        ],
+        "overall_risk_level": "moderate",
+        "recommended_actions": [
+          "Redistribute stock from high-availability zones to low-availability zones",
+          "Increase doctor attendance during the festival week"
+        ],
+        "accuracy_confidence_score": 85,
+        "data_sources_used": [
+          "Real-time weather data",
+          "Festival/event news",
+          "Hospital infrastructure data"
+        ]
       },
       "meta": {
         "requested_at": "2026-07-05T11:15:00.000Z",
