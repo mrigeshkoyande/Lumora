@@ -13,22 +13,14 @@ The frontend connects to the backend API to provide a seamless user interface fo
 - Node.js (v18+)
 - npm or yarn
 
-### Installation & Run
+### Installation (Coming Soon)
+Ensure you set up your environment variables based on the `.env.example` file before starting the application.
 
-1. **Install Dependencies**:
-   ```bash
-   npm install
-   ```
-
-2. **Start Dev Server**:
-   ```bash
-   npm run dev
-   ```
-
-3. **Build for Production**:
-   ```bash
-   npm run build
-   ```
+```bash
+# Example installation commands once the frontend framework is initialized:
+# npm install
+# npm run dev
+```
 
 ### Environment Variables
-Copy `.env.example` to `.env` and fill in the required variables (e.g., `VITE_API_URL` to point to the backend if running in production, defaults to proxying `/api` -> `http://127.0.0.1:8000` in dev).
+Copy `.env.example` to `.env` and fill in the required variables (e.g., the backend API URL).
