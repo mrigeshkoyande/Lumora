@@ -178,3 +178,72 @@ async def poll_inventory():
     except Exception as exc:
         logger.warning("Failed to poll inventory: %s", str(exc))
         raise HTTPException(status_code=500, detail=str(exc))
+
+
+@router.get("/weather/poll", tags=["weather"], summary="Poll weather forecast for a given time frame")
+def poll_weather(location: str, time_frame: str = "daily"):
+    logger.info("Weather poll requested for location=%s, time_frame=%s", location, time_frame)
+    try:
+        geo = external_service.geocode_location(location)
+    except ValueError as exc:
+        logger.warning("Weather poll geocode failed for %s: %s", location, str(exc))
+        raise HTTPException(status_code=404, detail=str(exc))
+
+    weather_raw = external_service.fetch_weather_forecast(geo["lat"], geo["lon"], geo["city"], time_frame)
+    try:
+        weather_data = json.loads(weather_raw)
+    except Exception:
+        weather_data = {"error": "Unable to parse weather response"}
+
+    return {
+        "status": "success",
+        "location": geo,
+        "data": weather_data
+    }
+
+
+@router.get("/weather/current", tags=["weather"], summary="Fetch detailed current weather and AQI")
+def current_weather(location: str):
+    logger.info("Detailed current weather requested for location=%s", location)
+    try:
+        geo = external_service.geocode_location(location)
+    except ValueError as exc:
+        logger.warning("Current weather geocode failed for %s: %s", location, str(exc))
+        raise HTTPException(status_code=404, detail=str(exc))
+
+    weather_raw = external_service.fetch_weather_aqi(geo["lat"], geo["lon"], geo["city"])
+    try:
+        weather_data = json.loads(weather_raw)
+    except Exception:
+        weather_data = {"error": "Unable to parse weather response"}
+
+    return {
+        "status": "success",
+        "location": geo,
+        "data": weather_data
+    }
+
+
+@router.get("/news/latest", tags=["news"], summary="Fetch the latest health and local news")
+def latest_news(location: str):
+    logger.info("Latest news requested for location=%s", location)
+    # Geocoding isn't strictly required for the news endpoint as it uses the raw string, 
+    # but we do it to standardize the location name if desired. 
+    try:
+        geo = external_service.geocode_location(location)
+        search_location = geo["city"]
+    except ValueError as exc:
+        logger.warning("News geocode failed for %s: %s, falling back to raw string", location, str(exc))
+        search_location = location
+
+    news_raw = external_service.fetch_health_news(search_location)
+    try:
+        news_data = json.loads(news_raw)
+    except Exception:
+        news_data = {"error": "Unable to parse news response"}
+
+    return {
+        "status": "success",
+        "search_location": search_location,
+        "data": news_data
+    }
