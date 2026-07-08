@@ -216,10 +216,39 @@ body {
 
 /* Sidebar glass */
 .glass-sidebar {
-  background: #ffffff;
+  background: transparent;
   border-right: 1px solid rgba(11, 37, 69, 0.08);
   box-shadow: 2px 0 12px rgba(11, 37, 69, 0.03);
 }
+
+.glass-sidebar .glass-surface__content {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Collapsed Sidebar Item Highlights */
+.glass-sidebar-collapsed .nav-item {
+  justify-content: center !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  gap: 0 !important;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.glass-sidebar-collapsed .nav-item:hover {
+  transform: scale(1.06) !important;
+}
+
+.glass-sidebar-collapsed .nav-item.active {
+  background: var(--color-primary) !important;
+}
+
 
 /* ============================================================
    SEVERITY INDICATORS
@@ -418,11 +447,25 @@ body {
   transform: translateX(2px);
 }
 .nav-item.active {
-  background: rgba(0, 100, 148, 0.15);
-  color: var(--color-primary);
-  border-left: 3px solid var(--color-primary);
+  background: var(--color-primary);
+  color: #ffffff !important;
   font-weight: 600;
-  padding-left: 13px;
+  padding-left: 16px;
+  box-shadow: 0 4px 12px rgba(0, 100, 148, 0.15);
+}
+
+.nav-item.active .material-symbols-outlined {
+  color: #ffffff !important;
+}
+
+.sidebar-group-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-on-surface-variant);
+  opacity: 0.55;
+  padding: 1.25rem 0.75rem 0.35rem;
 }
 
 /* ============================================================

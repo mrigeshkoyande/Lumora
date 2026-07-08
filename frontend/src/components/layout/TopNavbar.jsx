@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useLocation, useNavigate, NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import GlassSurface from '../ui/GlassSurface';
 
 const pageTitles = {
   '/dashboard':  'Dashboard',
@@ -22,7 +23,14 @@ const mobileNavItems = [
   { to: '/settings',  icon: 'settings',     label: 'Settings' },
 ];
 
-export default function TopNavbar({ onLocationChange, currentLocation = 'Chennai, India' }) {
+export default function TopNavbar({
+  onLocationChange,
+  currentLocation = 'Chennai, India',
+  isCollapsed,
+  setIsCollapsed,
+  isMobileOpen,
+  setIsMobileOpen
+}) {
   const location = useLocation();
   const navigate = useNavigate();
   const { logout } = useAuth();
@@ -42,110 +50,152 @@ export default function TopNavbar({ onLocationChange, currentLocation = 'Chennai
     <>
       {/* Desktop top bar */}
       <header
-        className="glass-nav fixed top-0 right-0 z-30 flex items-center justify-between px-8 py-3 hidden md:flex"
-        style={{ left: 256, width: 'calc(100% - 256px)' }}
+        className="fixed top-4 right-4 z-30 hidden md:flex transition-all duration-300"
+        style={{
+          left: 128,
+          width: 'calc(100% - 144px)',
+          height: '60px'
+        }}
         role="banner"
       >
-        {/* Left: page title + location search */}
-        <div className="flex items-center gap-6">
-          <h1 className="text-headline-mobile font-bold" style={{ color: '#0B2545' }}>
-            {pageTitle}
-          </h1>
+        <GlassSurface
+          width="100%"
+          height="100%"
+          borderRadius={20}
+          backgroundOpacity={0.03}
+          saturation={1.3}
+          brightness={50}
+          blur={12}
+          className="w-full h-full"
+          contentClassName="flex items-center justify-between px-6 w-full h-full"
+        >
+          {/* Left: page title + location search */}
+          <div className="flex items-center gap-4">
+            <h1 className="text-headline-mobile font-bold" style={{ color: '#0B2545' }}>
+              {pageTitle}
+            </h1>
 
-          {/* Location search — visible on dashboard + analysis pages */}
-          {['/dashboard', '/alerts', '/stock'].includes(location.pathname) && (
-            <form onSubmit={handleLocationSubmit} className="relative hidden lg:block">
-              <span
-                className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2"
-                style={{ color: 'var(--color-outline)', fontSize: 18 }}
-              >
-                location_on
-              </span>
-              <input
-                id="topnav-location-input"
-                type="text"
-                value={locInput}
-                onChange={(e) => setLocInput(e.target.value)}
-                placeholder="Enter city..."
-                className="glass-input rounded-full pl-9 pr-4 py-2 text-sm w-56"
-                aria-label="Analysis location"
-              />
-            </form>
-          )}
-        </div>
-
-        {/* Right: last update + emergency + notifications + settings + avatar */}
-        <div className="flex items-center gap-3">
-          <div
-            className="flex items-center gap-1 text-label-sm"
-            style={{ color: '#0B2545', opacity: 0.6 }}
-          >
-            <span className="material-symbols-outlined" style={{ fontSize: 16 }}>update</span>
-            Live data
+            {/* Location search — visible on dashboard + analysis pages */}
+            {['/dashboard', '/alerts', '/stock'].includes(location.pathname) && (
+              <form onSubmit={handleLocationSubmit} className="relative hidden lg:block">
+                <span
+                  className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2"
+                  style={{ color: 'var(--color-outline)', fontSize: 18 }}
+                >
+                  location_on
+                </span>
+                <input
+                  id="topnav-location-input"
+                  type="text"
+                  value={locInput}
+                  onChange={(e) => setLocInput(e.target.value)}
+                  placeholder="Enter city..."
+                  className="glass-input rounded-full pl-9 pr-4 py-2 text-sm w-56"
+                  aria-label="Analysis location"
+                />
+              </form>
+            )}
           </div>
 
-          <button
-            id="topnav-emergency-btn"
-            className="btn-primary"
-            style={{ background: '#ba1a1a', borderRadius: 9999, padding: '8px 16px' }}
-            aria-label="Emergency alert"
-          >
-            Emergency
-          </button>
+          {/* Right: last update + emergency + notifications + settings + avatar */}
+          <div className="flex items-center gap-3">
+            <div
+              className="flex items-center gap-1 text-label-sm"
+              style={{ color: '#0B2545', opacity: 0.6 }}
+            >
+              <span className="material-symbols-outlined" style={{ fontSize: 16 }}>update</span>
+              Live data
+            </div>
 
-          <button
-            id="topnav-notifications-btn"
-            className="relative p-2 rounded-full hover:bg-white/30 transition-colors"
-            aria-label="View notifications"
-            onClick={() => navigate('/alerts')}
-          >
-            <span className="material-symbols-outlined" style={{ color: '#0B2545', fontSize: 22 }}>notifications</span>
-            <span
-              className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full pulse-dot"
-              style={{ background: '#ba1a1a' }}
-            />
-          </button>
+            <button
+              id="topnav-emergency-btn"
+              className="btn-primary"
+              style={{ background: '#ba1a1a', borderRadius: 9999, padding: '8px 16px' }}
+              aria-label="Emergency alert"
+            >
+              Emergency
+            </button>
 
-          <button
-            id="topnav-settings-btn"
-            className="p-2 rounded-full hover:bg-white/30 transition-colors"
-            aria-label="Settings"
-            onClick={() => navigate('/settings')}
-          >
-            <span className="material-symbols-outlined" style={{ color: '#0B2545', opacity: 0.7, fontSize: 22 }}>settings</span>
-          </button>
+            <button
+              id="topnav-notifications-btn"
+              className="relative p-2 rounded-full hover:bg-white/30 transition-colors"
+              aria-label="View notifications"
+              onClick={() => navigate('/alerts')}
+            >
+              <span className="material-symbols-outlined" style={{ color: '#0B2545', fontSize: 22 }}>notifications</span>
+              <span
+                className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full pulse-dot"
+                style={{ background: '#ba1a1a' }}
+              />
+            </button>
 
-          {/* User avatar */}
-          <button
-            id="topnav-avatar-btn"
-            className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm border-2 border-white/60"
-            style={{ background: 'var(--color-primary-container)', color: 'var(--color-on-primary-container)' }}
-            aria-label="User profile"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            DR
-          </button>
-        </div>
+            <button
+              id="topnav-settings-btn"
+              className="p-2 rounded-full hover:bg-white/30 transition-colors"
+              aria-label="Settings"
+              onClick={() => navigate('/settings')}
+            >
+              <span className="material-symbols-outlined" style={{ color: '#0B2545', opacity: 0.7, fontSize: 22 }}>settings</span>
+            </button>
+
+            {/* User avatar */}
+            <button
+              id="topnav-avatar-btn"
+              className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm border-2 border-white/60"
+              style={{ background: 'var(--color-primary-container)', color: 'var(--color-on-primary-container)' }}
+              aria-label="User profile"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              DR
+            </button>
+          </div>
+        </GlassSurface>
       </header>
 
       {/* Mobile top bar */}
       <header
-        className="glass-nav fixed top-0 left-0 right-0 z-30 flex items-center justify-between px-4 py-3 md:hidden"
+        className="fixed top-3 left-3 right-3 z-30 md:hidden"
+        style={{ height: '52px', width: 'calc(100% - 24px)' }}
         role="banner"
       >
-        <div className="font-bold" style={{ color: 'var(--color-primary)', fontSize: 20 }}>Arogya OS</div>
-        <div className="flex gap-2">
-          <button
-            className="p-2 rounded-full hover:bg-white/30 transition-colors"
-            aria-label="Notifications"
-            onClick={() => navigate('/alerts')}
-          >
-            <span className="material-symbols-outlined" style={{ color: 'var(--color-primary)', fontSize: 22 }}>notifications</span>
-          </button>
-          <button className="p-2 rounded-full hover:bg-white/30 transition-colors" aria-label="Settings" onClick={() => navigate('/settings')}>
-            <span className="material-symbols-outlined" style={{ color: 'var(--color-on-surface-variant)', fontSize: 22 }}>settings</span>
-          </button>
-        </div>
+        <GlassSurface
+          width="100%"
+          height="100%"
+          borderRadius={16}
+          backgroundOpacity={0.03}
+          saturation={1.3}
+          brightness={50}
+          blur={12}
+          className="w-full h-full"
+          contentClassName="flex items-center justify-between px-4 w-full h-full"
+        >
+          <div className="flex items-center gap-2">
+            <button
+              id="mobile-topnav-toggle-sidebar"
+              onClick={() => setIsMobileOpen(!isMobileOpen)}
+              className="p-1 rounded-lg hover:bg-black/5 text-[#0B2545]"
+              aria-label="Toggle navigation drawer"
+              style={{ border: 'none', background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+            >
+              <span className="material-symbols-outlined" style={{ fontSize: 22 }}>
+                menu
+              </span>
+            </button>
+            <div className="font-bold" style={{ color: 'var(--color-primary)', fontSize: 20 }}>Arogya OS</div>
+          </div>
+          <div className="flex gap-2">
+            <button
+              className="p-2 rounded-full hover:bg-white/30 transition-colors"
+              aria-label="Notifications"
+              onClick={() => navigate('/alerts')}
+            >
+              <span className="material-symbols-outlined" style={{ color: 'var(--color-primary)', fontSize: 22 }}>notifications</span>
+            </button>
+            <button className="p-2 rounded-full hover:bg-white/30 transition-colors" aria-label="Settings" onClick={() => navigate('/settings')}>
+              <span className="material-symbols-outlined" style={{ color: 'var(--color-on-surface-variant)', fontSize: 22 }}>settings</span>
+            </button>
+          </div>
+        </GlassSurface>
       </header>
 
       {/* Mobile bottom nav */}

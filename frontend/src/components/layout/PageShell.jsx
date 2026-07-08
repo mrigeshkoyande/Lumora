@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Sidebar from './Sidebar';
 import TopNavbar from './TopNavbar';
 
@@ -6,6 +7,9 @@ import TopNavbar from './TopNavbar';
  * Combines Sidebar (desktop) + TopNavbar + main content area.
  */
 export default function PageShell({ children, onLocationChange, currentLocation }) {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+
   return (
     <div style={{ minHeight: '100vh', display: 'flex' }}>
       {/* Ambient background */}
@@ -16,21 +20,38 @@ export default function PageShell({ children, onLocationChange, currentLocation 
         <div className="blob blob-3" />
       </div>
 
-      {/* Sidebar — desktop only */}
-      <Sidebar />
+      {/* Mobile backdrop overlay */}
+      {isMobileOpen && (
+        <div
+          className="fixed inset-0 bg-black/30 backdrop-blur-xs z-30 md:hidden"
+          onClick={() => setIsMobileOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Sidebar — responsive layout */}
+      <Sidebar
+        collapsed={isCollapsed}
+        mobileOpen={isMobileOpen}
+        onCloseMobile={() => setIsMobileOpen(false)}
+        onToggleCollapsed={() => setIsCollapsed(!isCollapsed)}
+      />
 
       {/* Main area */}
-      <div className="flex flex-col flex-1 md:ml-64">
+      <div className="flex flex-col flex-1 transition-all duration-300 ml-0 md:ml-[112px]">
         <TopNavbar
           onLocationChange={onLocationChange}
           currentLocation={currentLocation}
+          isCollapsed={isCollapsed}
+          setIsCollapsed={setIsCollapsed}
+          isMobileOpen={isMobileOpen}
+          setIsMobileOpen={setIsMobileOpen}
         />
 
         {/* Content: push below fixed topbar (64px mobile, 64px desktop) */}
         <main
-          className="flex-1 overflow-y-auto"
+          className="flex-1 overflow-y-auto pt-[76px] md:pt-24"
           style={{
-            paddingTop: '72px',      /* below fixed topnav */
             paddingBottom: '80px',   /* above mobile bottom nav */
             paddingLeft: '32px',
             paddingRight: '32px',
