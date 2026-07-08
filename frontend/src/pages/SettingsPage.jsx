@@ -33,9 +33,9 @@ export default function SettingsPage() {
           Manage system access, rulesets, and organizational structures.
         </p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: 16, alignItems: 'start' }}>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
           {/* Section nav */}
-          <div className="glass-panel" style={{ padding: 12 }}>
+          <div className="glass-panel lg:col-span-3" style={{ padding: 12 }}>
             {SECTIONS.map((s) => (
               <button
                 key={s.id}
@@ -52,7 +52,7 @@ export default function SettingsPage() {
           </div>
 
           {/* Content */}
-          <div className="glass-panel" style={{ padding: 28 }}>
+          <div className="glass-panel lg:col-span-9" style={{ padding: 28 }}>
             {/* Users & Roles */}
             {activeSection === 'users' && (
               <div>
@@ -91,6 +91,8 @@ export default function SettingsPage() {
 
                 {/* Users table */}
                 <div style={{ background: 'rgba(255,255,255,0.4)', border: '1px solid rgba(255,255,255,0.6)', borderRadius: 14, overflow: 'hidden' }}>
+                  <div style={{ overflowX: 'auto', width: '100%' }}>
+                    <div style={{ minWidth: 600 }}>
                   <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1.5fr 0.8fr 1fr', padding: '12px 20px', borderBottom: '1px solid rgba(255,255,255,0.4)', background: 'rgba(255,255,255,0.2)' }}>
                     {['User', 'Role', 'Scope', 'Status', 'Actions'].map((h) => (
                       <span key={h} className="text-label-sm" style={{ color: 'var(--color-on-surface-variant)' }}>{h}</span>
@@ -127,6 +129,8 @@ export default function SettingsPage() {
                       </div>
                     </div>
                   ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             )}

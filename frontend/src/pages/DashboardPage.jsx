@@ -384,17 +384,10 @@ export default function DashboardPage() {
 
         {/* Main Content Split */}
         <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'minmax(0,1.6fr) minmax(0,1fr)',
-            gap: 16,
-            marginBottom: 24,
-            alignItems: 'start',
-          }}
-          className="intervention-grid"
+          className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-6 items-start"
         >
           {/* Left Column: Intervention Queue */}
-          <div className="glass-panel" style={{ padding: 24, minHeight: 400 }}>
+          <div className="glass-panel lg:col-span-7" style={{ padding: 24, minHeight: 400 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
               <h3 className="font-semibold" style={{ color: '#0B2545', fontSize: 20, margin: 0 }}>
                 Intervention Queue
@@ -467,7 +460,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Right Column: Territory View (Map/Grid) & Environmental Info */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div className="lg:col-span-5" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             
             {/* Map/Grid Panel */}
             <div className="glass-panel" style={{ overflow: 'hidden' }}>
@@ -592,7 +585,7 @@ export default function DashboardPage() {
               {snapshotLoading ? (
                 <div style={{ textAlign: 'center', padding: '12px' }}><div className="spinner" /></div>
               ) : weather ? (
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                <div className="grid grid-cols-2 gap-3">
                   <div style={{ background: 'rgba(11, 37, 69, 0.02)', border: '1px solid rgba(11, 37, 69, 0.06)', borderRadius: 12, padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 10 }}>
                     <span className="material-symbols-outlined" style={{ color: 'var(--color-primary)', fontSize: 20 }}>thermostat</span>
                     <div>
@@ -639,7 +632,7 @@ export default function DashboardPage() {
         <section
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
             gap: 16,
             marginTop: 16,
           }}

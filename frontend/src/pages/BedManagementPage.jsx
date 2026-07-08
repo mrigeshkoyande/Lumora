@@ -49,7 +49,7 @@ export default function BedManagementPage() {
             </p>
           </div>
           {/* KPI strip */}
-          <div style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
+          <div className="flex flex-wrap gap-5 items-center">
             {[
               { label: 'Total Beds', val: totalBeds, color: '#0B2545' },
               { label: 'Occupied',   val: totalOcc,  color: '#ba1a1a' },
@@ -63,9 +63,9 @@ export default function BedManagementPage() {
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: 16, alignItems: 'start' }}>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
           {/* Ward Grids */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div className="lg:col-span-8 flex flex-col gap-4">
             {WARDS.map((w) => (
               <div key={w.name} className="glass-panel" style={{ padding: 24 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -90,7 +90,7 @@ export default function BedManagementPage() {
           </div>
 
           {/* Nearby Facilities Sidebar */}
-          <div className="glass-panel" style={{ padding: 24 }}>
+          <div className="glass-panel lg:col-span-4" style={{ padding: 24 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
               <span className="material-symbols-outlined" style={{ color: 'var(--color-primary)', fontSize: 20 }}>
                 my_location

@@ -79,7 +79,7 @@ export default function StaffPage() {
         </div>
 
         {/* KPI Strip */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 24 }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
           {[
             { label: 'TOTAL STAFF',   icon: 'group',         val: total,   sub: '+2 this week', color: '#0B2545' },
             { label: 'PRESENT TODAY', icon: 'person_check',  val: present, sub: `${Math.round(present/total*100)}% attendance rate`, color: '#006494' },
@@ -97,9 +97,9 @@ export default function StaffPage() {
           ))}
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: 16, alignItems: 'start' }}>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
           {/* Roster Table */}
-          <div className="glass-panel" style={{ padding: 24 }}>
+          <div className="glass-panel lg:col-span-8" style={{ padding: 24 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
               <h3 className="font-semibold" style={{ color: '#0B2545', fontSize: 18, margin: 0 }}>Staff Roster</h3>
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
@@ -202,7 +202,7 @@ export default function StaffPage() {
           </div>
 
           {/* Right Sidebar */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+          <div className="lg:col-span-4" style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
             {/* Systemic Shortages */}
             <div className="glass-panel" style={{ padding: 20 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>

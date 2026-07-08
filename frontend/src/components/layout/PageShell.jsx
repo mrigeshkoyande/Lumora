@@ -38,7 +38,7 @@ export default function PageShell({ children, onLocationChange, currentLocation 
       />
 
       {/* Main area */}
-      <div className="flex flex-col flex-1 transition-all duration-300 ml-0 md:ml-[112px]">
+      <div className={`flex flex-col flex-1 transition-all duration-300 ml-0 ${isCollapsed ? 'md:ml-[112px]' : 'md:ml-[288px]'}`}>
         <TopNavbar
           onLocationChange={onLocationChange}
           currentLocation={currentLocation}
@@ -50,11 +50,9 @@ export default function PageShell({ children, onLocationChange, currentLocation 
 
         {/* Content: push below fixed topbar (64px mobile, 64px desktop) */}
         <main
-          className="flex-1 overflow-y-auto pt-[76px] md:pt-24"
+          className="flex-1 overflow-y-auto pt-[76px] md:pt-24 px-4 md:px-8"
           style={{
             paddingBottom: '80px',   /* above mobile bottom nav */
-            paddingLeft: '32px',
-            paddingRight: '32px',
             maxWidth: '1280px',
             margin: '0 auto',
             width: '100%',

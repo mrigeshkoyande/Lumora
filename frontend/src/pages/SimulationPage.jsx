@@ -44,8 +44,8 @@ export default function SimulationPage() {
 
         {/* Scenario Builder */}
         <div className="glass-panel" style={{ padding: 28, marginBottom: 20 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 24, alignItems: 'start' }}>
-            <div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            <div className="lg:col-span-9">
               {/* Templates */}
               <div className="text-label-sm" style={{ color: 'var(--color-outline)', marginBottom: 14 }}>SELECT BASELINE TEMPLATE</div>
               <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 24 }}>
@@ -131,7 +131,7 @@ export default function SimulationPage() {
             </div>
 
             {/* Time horizon + run button */}
-            <div style={{ minWidth: 200 }}>
+            <div className="lg:col-span-3 w-full" style={{ minWidth: 200 }}>
               <div
                 style={{
                   background: 'rgba(255,255,255,0.5)',
@@ -228,7 +228,7 @@ export default function SimulationPage() {
             )}
 
             {/* Trajectory comparison */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div
                 style={{
                   background: 'rgba(186,26,26,0.06)',

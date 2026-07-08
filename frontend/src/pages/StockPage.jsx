@@ -187,6 +187,8 @@ export default function StockPage() {
 
             {/* Inventory Table */}
             <div className="glass-panel" style={{ overflow: 'hidden' }}>
+              <div style={{ overflowX: 'auto', width: '100%' }}>
+                <div style={{ minWidth: 650 }}>
               {/* Table Header */}
               <div
                 style={{
@@ -268,13 +270,11 @@ export default function StockPage() {
                     {/* Expanded row */}
                     {expandedSku === item.sku && (
                       <div
+                        className="grid grid-cols-1 md:grid-cols-2 gap-5"
                         style={{
                           background: 'rgba(0,100,148,0.03)',
                           borderBottom: '1px solid rgba(255,255,255,0.3)',
                           padding: '20px 24px',
-                          display: 'grid',
-                          gridTemplateColumns: '1fr 1fr',
-                          gap: 20,
                         }}
                       >
                         {/* Depletion forecast */}
@@ -384,6 +384,8 @@ export default function StockPage() {
                   </div>
                 ))
               )}
+                </div>
+              </div>
             </div>
           </>
         )}

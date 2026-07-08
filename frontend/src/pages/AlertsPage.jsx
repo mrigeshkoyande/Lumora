@@ -147,9 +147,9 @@ export default function AlertsPage() {
         </div>
 
         {/* Layout: Filters + Alerts List */}
-        <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 16, alignItems: 'start' }}>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
           {/* Filter Sidebar */}
-          <div className="glass-panel" style={{ padding: 20 }}>
+          <div className="glass-panel lg:col-span-3" style={{ padding: 20 }}>
             <div className="text-label-sm" style={{ color: 'var(--color-outline)', marginBottom: 16 }}>FILTERS</div>
 
             {/* Facility */}
@@ -251,7 +251,7 @@ export default function AlertsPage() {
           </div>
 
           {/* Alerts List */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <div className="lg:col-span-9" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {filtered.length === 0 ? (
               <EmptyState
                 icon="notifications_off"

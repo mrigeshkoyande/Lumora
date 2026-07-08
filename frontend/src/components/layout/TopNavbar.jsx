@@ -52,8 +52,8 @@ export default function TopNavbar({
       <header
         className="fixed top-4 right-4 z-30 hidden md:flex transition-all duration-300"
         style={{
-          left: 128,
-          width: 'calc(100% - 144px)',
+          left: isCollapsed ? 112 : 288,
+          width: isCollapsed ? 'calc(100% - 128px)' : 'calc(100% - 304px)',
           height: '60px'
         }}
         role="banner"
