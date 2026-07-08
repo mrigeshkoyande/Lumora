@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Approvals Inbox - Arogya OS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#80f1f9",
+                        "surface-dim": "#cfddde",
+                        "surface": "#eefcfd",
+                        "primary-fixed": "#cbe6ff",
+                        "inverse-surface": "#263334",
+                        "inverse-on-surface": "#e5f3f4",
+                        "secondary-fixed": "#83f4fc",
+                        "on-tertiary-container": "#00484a",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#94d1d3",
+                        "on-tertiary-fixed": "#002021",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#111e1f",
+                        "on-secondary-container": "#006e73",
+                        "surface-container-high": "#ddebec",
+                        "tertiary-container": "#7ab6b8",
+                        "on-primary-container": "#004466",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed-dim": "#64d7df",
+                        "secondary": "#00696e",
+                        "tertiary-fixed": "#b0edef",
+                        "primary-container": "#3ab5ff",
+                        "on-secondary-fixed": "#002022",
+                        "surface-variant": "#d7e5e6",
+                        "on-primary-fixed": "#001e30",
+                        "tertiary": "#286769",
+                        "surface-tint": "#006494",
+                        "on-secondary-fixed-variant": "#004f53",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#034f51",
+                        "outline-variant": "#bec8d2",
+                        "error": "#ba1a1a",
+                        "on-background": "#111e1f",
+                        "surface-container-highest": "#d7e5e6",
+                        "primary": "#006494",
+                        "background": "#eefcfd",
+                        "surface-bright": "#eefcfd",
+                        "on-surface-variant": "#3e4851",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#8ecdff",
+                        "surface-container-low": "#e8f6f7",
+                        "outline": "#6f7882",
+                        "on-tertiary": "#ffffff",
+                        "inverse-primary": "#8ecdff",
+                        "surface-container": "#e3f1f2",
+                        "on-primary-fixed-variant": "#004b71"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "container-max": "1280px",
+                        "margin-mobile": "16px",
+                        "gutter": "24px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; font-feature-settings: "tnum" 1; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(255, 255, 255, 0.8);
+            border-left: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+        .glass-modal {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 20px 25px -5px rgba(58, 181, 255, 0.1), 0 10px 10px -5px rgba(58, 181, 255, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col md:flex-row antialiased overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar (Mobile Only for Shell Visibility rule, but prompt asks for Desktop Nav & Top Global Bar. Will render SideNav for Web and TopAppBar for global context) -->
+<!-- However, prompt says: "Layout: Left glass nav rail, Top global bar with 'Approvals' active." -->
+<!-- SideNavBar (Desktop Nav Rail) -->
+<nav class="hidden md:flex h-screen w-64 fixed left-0 top-0 z-40 border-r border-white/10 bg-surface/30 shadow-xl shadow-primary/5 flex-col py-8 px-4 gap-6 backdrop-blur-2xl glass-panel">
+<div class="flex items-center gap-4 px-2 mb-4">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container overflow-hidden ring-2 ring-white">
+<img alt="District Health Logo" class="w-full h-full object-cover" data-alt="A stylized, modern geometric logo for a health district, featuring interlocking soft blue and teal shapes on a pristine white background. The logo suggests connectivity, care, and efficiency in a high-tech medical administrative setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1lNx6H4D80_jkSEX7EsEuxPOnAZW7HVUEZbuxDE2f131R3SA_kPr4g9YKdpyD7yAGPpfrm5BeznH-gWAN3-S7sAWQgQraPYEn3POt6zKRMy4sGMvYFNJJDDq9-iNXMsaToUjoYYCOAX2tIVhlO4naIqsWUI_qH6A6FV63wZbzW7qwpWT1dN_sLwBwYsZydQQAOgMziJu9rJOhgnoHfc0t85CIpLeMAsoxu6oFAH329x2CNIKQI1WYF2yR_HujlhX7SyFTXYHrYDU"/>
+</div>
+<div>
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight" style="font-size: 1.25rem; line-height: 1.75rem;">Health District</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Regional Admin</p>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary rounded-full py-3 px-4 font-label-sm text-label-sm shadow-md hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+            Bulk Action
+        </button>
+<div class="flex-1 flex flex-col gap-2 mt-4">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-label-sm text-label-sm hover:bg-white/15 transition-all duration-200 translate-x-1" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-r-lg bg-primary/20 text-primary border-r-4 border-primary font-label-sm text-label-sm font-bold shadow-sm translate-x-1 duration-300" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">fact_check</span>
+                Approvals
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-label-sm text-label-sm hover:bg-white/15 transition-all duration-200 translate-x-1" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+                Inventory
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-label-sm text-label-sm hover:bg-white/15 transition-all duration-200 translate-x-1" href="#">
+<span class="material-symbols-outlined">groups</span>
+                Staffing
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-label-sm text-label-sm hover:bg-white/15 transition-all duration-200 translate-x-1" href="#">
+<span class="material-symbols-outlined">hail</span>
+                Referrals
+            </a>
+</div>
+<div class="flex flex-col gap-2 mt-auto pt-4 border-t border-white/20">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-label-sm text-label-sm hover:bg-white/15 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Settings
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-label-sm text-label-sm hover:bg-white/15 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">help_center</span>
+                Support
+            </a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 flex flex-col min-h-screen relative">
+<!-- TopAppBar (Global Bar) -->
+<header class="docked full-width top-0 sticky z-30 flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 bg-surface/40 backdrop-blur-3xl border-b border-white/20 shadow-sm shadow-primary/10">
+<div class="flex items-center gap-4">
+<!-- Mobile menu toggle placeholder -->
+<button class="md:hidden p-2 text-on-surface-variant">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="font-display-lg text-display-lg text-primary dark:text-primary-fixed tracking-tight" style="font-size: 1.5rem; line-height: 2rem;">Arogya OS</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="pl-10 pr-4 py-2 rounded-full bg-surface-container-high/50 border-white/40 focus:ring-2 focus:ring-primary focus:border-transparent font-body-md text-body-md text-on-surface placeholder-outline-variant w-64 glass-card transition-all" placeholder="Search approvals..." type="text"/>
+</div>
+<button class="p-2 text-on-surface-variant hover:bg-white/20 transition-colors duration-300 rounded-full scale-95 active:scale-90 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-2.5 h-2.5 bg-error rounded-full border border-white"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-white/20 transition-colors duration-300 rounded-full scale-95 active:scale-90 hidden sm:block">
+<span class="material-symbols-outlined">language</span>
+</button>
+<div class="w-9 h-9 rounded-full overflow-hidden border-2 border-white/60 shadow-sm ml-2 cursor-pointer">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="Professional headshot of a regional healthcare administrator, a middle-aged professional with a warm but serious expression, wearing a tailored navy blazer over a crisp white shirt. The background is a softly out-of-focus modern office interior with subtle cool-toned lighting, conveying competence and high-end corporate healthcare management." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFfcrbSetg7t7dMk4tgxlJ_xD0Y-XF-agC6MF3_wTjq_BvkytBumulNxw_W1_6naRb-g7OupV8TECUa_a8CYfUH0axq96MSvKiWPQZz7fnA7ziYqijdymfIlycIFpngzhnMf7h7AWqZ-WBzaj7b1iDv-xgqD9PwgYMQ3pFs7uIU4mvsvD9QuQ7HB2wHPC499y2QDHk7MgNxFgquv-If9YJNNh89FxU9fzQbROZe4Y_aot__KR0LtPM30HV3aVw-AZTXstnWTIR_Tc"/>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="flex-1 p-margin-mobile md:p-margin-desktop max-w-container-max mx-auto w-full pb-32">
+<!-- Page Header -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Approvals Inbox</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Review and manage pending operational decisions.</p>
+</div>
+<div class="flex flex-wrap items-center gap-3">
+<div class="flex items-center bg-surface-container-low rounded-full p-1 border border-white/50 glass-card">
+<button class="px-4 py-1.5 rounded-full bg-primary/20 text-on-primary-container font-label-sm text-label-sm shadow-sm transition-all">All</button>
+<button class="px-4 py-1.5 rounded-full text-on-surface-variant hover:bg-white/40 font-label-sm text-label-sm transition-all">Stock</button>
+<button class="px-4 py-1.5 rounded-full text-on-surface-variant hover:bg-white/40 font-label-sm text-label-sm transition-all">Staff</button>
+<button class="px-4 py-1.5 rounded-full text-on-surface-variant hover:bg-white/40 font-label-sm text-label-sm transition-all">Referrals</button>
+</div>
+<label class="flex items-center gap-2 cursor-pointer ml-auto lg:ml-4 glass-card px-4 py-2 rounded-full border border-white/60 hover:bg-white/60 transition-colors">
+<input class="form-checkbox text-primary rounded border-outline-variant bg-white/50 focus:ring-primary w-4 h-4" id="selectMultipleToggle" type="checkbox"/>
+<span class="font-label-sm text-label-sm text-on-surface font-medium">Select Multiple</span>
+</label>
+</div>
+</div>
+<!-- Approvals Stack -->
+<div class="flex flex-col gap-4">
+<!-- Group: Critical -->
+<div class="mb-2">
+<h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-4 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error"></span> Requires Immediate Action
+                    </h3>
+<!-- Expanded Card -->
+<div class="glass-card rounded-xl p-0 overflow-hidden border border-error/20 mb-4 transition-all duration-300 ring-1 ring-error/10">
+<!-- Card Header/Summary Row -->
+<div class="p-5 flex flex-col xl:flex-row xl:items-center gap-5 bg-white/30">
+<!-- Left: Status & Identity -->
+<div class="flex items-start gap-4 min-w-[280px]">
+<div class="w-12 h-12 rounded-xl bg-error-container flex items-center justify-center text-on-error-container shrink-0 border border-white/40">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant mb-1">Central Warehouse</span>
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded bg-error/10 text-error border border-error/20 font-label-sm text-[10px] uppercase font-bold tracking-wider">Critical</span>
+<span class="text-error font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">timer</span> 24m left
+                                        </span>
+</div>
+</div>
+</div>
+<!-- Middle: Summary -->
+<div class="flex-1">
+<h4 class="font-body-md text-body-md text-on-surface font-semibold mb-1">Emergency Transfer: 500 units Paracetamol</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">From: Central Warehouse → To: North District Clinic</p>
+</div>
+<!-- Right: Actions -->
+<div class="flex items-center gap-2 shrink-0 mt-4 xl:mt-0">
+<button class="px-3 py-2 rounded-lg text-on-surface-variant hover:bg-white/50 font-label-sm text-label-sm transition-colors border border-transparent hover:border-white/60">Modify</button>
+<button class="px-4 py-2 rounded-lg border border-error/40 text-error hover:bg-error-container/50 font-label-sm text-label-sm transition-colors bg-white/40">Reject</button>
+<button class="px-4 py-2 rounded-lg bg-secondary text-on-secondary font-label-sm text-label-sm hover:bg-secondary/90 transition-colors shadow-sm">Approve</button>
+</div>
+</div>
+<!-- Expanded Details Container -->
+<div class="p-6 border-t border-white/40 bg-surface-dim/20 backdrop-blur-md">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Context Column -->
+<div class="lg:col-span-1 flex flex-col gap-4">
+<div class="glass-panel p-4 rounded-lg">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-error">warning</span>
+<span class="font-label-sm text-label-sm font-bold text-on-surface">Blast Radius</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">High impact on North District maternity ward. Current stock depletes in <span class="font-semibold text-error">2 hours</span>.</p>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-lg bg-secondary-container/20 border border-secondary-container/30">
+<span class="material-symbols-outlined text-secondary">verified</span>
+<span class="font-label-sm text-label-sm text-on-surface font-medium">System Recommendation: <span class="text-secondary">Approve</span></span>
+</div>
+</div>
+<!-- Data Visualization Column -->
+<div class="lg:col-span-2 glass-panel p-4 rounded-lg relative overflow-hidden">
+<div class="flex justify-between items-center mb-4 relative z-10">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">21-Day Inventory Forecast (North District)</span>
+<span class="px-2 py-1 bg-surface-container rounded text-xs font-semibold text-tertiary border border-white/50 shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">auto_graph</span> 94% Confidence
+                                        </span>
+</div>
+<!-- Decorative Chart Placeholder -->
+<div class="h-32 w-full relative z-10 flex items-end justify-between gap-1 px-2 pb-2 border-b border-l border-outline-variant/30">
+<div class="w-full h-[20%] bg-surface-variant rounded-t-sm opacity-50"></div>
+<div class="w-full h-[15%] bg-error/40 rounded-t-sm"></div>
+<div class="w-full h-[10%] bg-error/60 rounded-t-sm"></div>
+<div class="w-full h-[30%] bg-secondary/40 rounded-t-sm border-t border-secondary"></div>
+<div class="w-full h-[45%] bg-secondary/50 rounded-t-sm border-t border-secondary"></div>
+<div class="w-full h-[60%] bg-secondary/60 rounded-t-sm border-t border-secondary"></div>
+<div class="w-full h-[75%] bg-secondary/70 rounded-t-sm border-t border-secondary"></div>
+<div class="w-full h-[90%] bg-secondary/80 rounded-t-sm border-t border-secondary"></div>
+<!-- Trend line SVG placeholder -->
+<svg class="absolute inset-0 h-full w-full pointer-events-none" preserveaspectratio="none" viewbox="0 0 100 100">
+<path class="text-secondary drop-shadow-md" d="M0,80 L12,85 L25,90 L37,70 L50,55 L62,40 L75,25 L87,10 L100,5" fill="none" stroke="currentColor" stroke-width="2"></path>
+<circle class="fill-error" cx="25" cy="90" r="3"></circle>
+<line class="text-error" stroke="currentColor" stroke-dasharray="2,2" stroke-width="1" x1="25" x2="25" y1="90" y2="100"></line>
+</svg>
+</div>
+<div class="flex justify-between mt-1 text-[10px] text-outline px-2 relative z-10">
+<span>Today</span>
+<span>+7d</span>
+<span>+14d</span>
+<span>+21d</span>
+</div>
+<!-- Subtle ambient glow for glass effect -->
+<div class="absolute -top-10 -right-10 w-40 h-40 bg-secondary-container/20 rounded-full blur-3xl"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Group: Standard -->
+<div>
+<h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-4 mt-6 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-outline"></span> Standard Queue
+                    </h3>
+<!-- Standard Card 1 -->
+<div class="glass-card rounded-xl p-5 flex flex-col xl:flex-row xl:items-center gap-5 hover:bg-white/60 transition-colors border-l-4 border-l-tertiary-container mb-3">
+<div class="flex items-start gap-4 min-w-[280px]">
+<!-- Checkbox for Bulk Actions (Hidden by default, shown via CSS state typically, here just styled appropriately) -->
+<div class="mt-3 xl:mt-0 mr-1 opacity-0 pointer-events-none w-0 overflow-hidden transition-all bulk-checkbox-container">
+<input class="form-checkbox text-primary rounded border-outline-variant bg-white focus:ring-primary w-5 h-5" type="checkbox"/>
+</div>
+<div class="w-12 h-12 rounded-xl bg-tertiary-container/30 flex items-center justify-center text-tertiary shrink-0 border border-white/40">
+<span class="material-symbols-outlined">groups</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant mb-1">East Wing</span>
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded bg-surface-variant text-on-surface-variant border border-white/50 font-label-sm text-[10px] uppercase font-bold tracking-wider">Medium</span>
+<span class="text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1 opacity-70">
+<span class="material-symbols-outlined text-[14px]">schedule</span> 14h left
+                                    </span>
+</div>
+</div>
+</div>
+<div class="flex-1">
+<h4 class="font-body-md text-body-md text-on-surface font-medium mb-1">Staff Reallocation: 3 ICU Nurses</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Shift: Night (22:00 - 06:00) • Covering anticipated surge</p>
+</div>
+<div class="flex items-center gap-2 shrink-0 mt-4 xl:mt-0">
+<button class="px-3 py-2 rounded-lg text-on-surface-variant hover:bg-white/50 font-label-sm text-label-sm transition-colors border border-transparent hover:border-white/60">Modify</button>
+<button class="px-4 py-2 rounded-lg border border-error/30 text-error hover:bg-error-container/50 font-label-sm text-label-sm transition-colors bg-white/40">Reject</button>
+<button class="px-4 py-2 rounded-lg bg-secondary text-on-secondary font-label-sm text-label-sm hover:bg-secondary/90 transition-colors shadow-sm">Approve</button>
+</div>
+</div>
+<!-- Standard Card 2 -->
+<div class="glass-card rounded-xl p-5 flex flex-col xl:flex-row xl:items-center gap-5 hover:bg-white/60 transition-colors border-l-4 border-l-surface-variant mb-3 relative overflow-hidden group">
+<!-- Selected State overlay (Simulated active for demo) -->
+<div class="absolute inset-0 bg-primary-container/5 opacity-0 group-[.is-selected]:opacity-100 transition-opacity pointer-events-none"></div>
+<div class="flex items-start gap-4 min-w-[280px] relative z-10">
+<!-- Checkbox -->
+<div class="mt-3 xl:mt-0 mr-1 opacity-100 w-auto transition-all bulk-checkbox-container">
+<input checked="" class="form-checkbox text-primary rounded border-outline-variant bg-white focus:ring-primary w-5 h-5 cursor-pointer shadow-sm" type="checkbox"/>
+</div>
+<div class="w-12 h-12 rounded-xl bg-surface-variant/50 flex items-center justify-center text-on-surface-variant shrink-0 border border-white/40">
+<span class="material-symbols-outlined">hail</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant mb-1">South Clinic</span>
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-outline border border-white/50 font-label-sm text-[10px] uppercase font-bold tracking-wider">Low</span>
+<span class="text-outline font-label-sm text-label-sm flex items-center gap-1 opacity-70">
+<span class="material-symbols-outlined text-[14px]">schedule</span> 2d left
+                                    </span>
+</div>
+</div>
+</div>
+<div class="flex-1 relative z-10">
+<h4 class="font-body-md text-body-md text-on-surface font-medium mb-1">Outpatient Referral Batch (12 Patients)</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Specialty: Cardiology • Routine screenings</p>
+</div>
+<div class="flex items-center gap-2 shrink-0 mt-4 xl:mt-0 relative z-10">
+<button class="px-3 py-2 rounded-lg text-on-surface-variant hover:bg-white/50 font-label-sm text-label-sm transition-colors border border-transparent hover:border-white/60">Modify</button>
+<button class="px-4 py-2 rounded-lg border border-error/30 text-error hover:bg-error-container/50 font-label-sm text-label-sm transition-colors bg-white/40">Reject</button>
+<button class="px-4 py-2 rounded-lg bg-secondary text-on-secondary font-label-sm text-label-sm hover:bg-secondary/90 transition-colors shadow-sm">Approve</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bulk Action Bar (Floating at bottom) -->
+<!-- In a real app this visibility would be toggled via JS based on selection. Keeping it visible for the prompt requirement. -->
+<div class="fixed bottom-6 left-0 md:left-64 right-0 px-margin-mobile md:px-margin-desktop z-40 pointer-events-none flex justify-center">
+<div class="glass-modal rounded-full px-6 py-4 flex items-center gap-6 pointer-events-auto transform transition-transform translate-y-0 shadow-2xl">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-sm">3</div>
+<span class="font-body-md text-body-md text-on-surface font-medium">Selected</span>
+</div>
+<div class="h-8 w-px bg-outline-variant/50"></div>
+<div class="flex gap-3">
+<button class="px-4 py-2 rounded-full border border-outline-variant text-on-surface hover:bg-white/60 font-label-sm text-label-sm transition-colors bg-white/40">Cancel</button>
+<button class="px-5 py-2 rounded-full bg-error/90 text-on-error font-label-sm text-label-sm hover:bg-error transition-colors shadow-md flex items-center gap-2">
+                        Reject All
+                    </button>
+<button class="px-5 py-2 rounded-full bg-secondary text-on-secondary font-label-sm text-label-sm hover:bg-secondary/90 transition-colors shadow-md flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">done_all</span>
+                        Approve 3 Selected (Low Risk Only)
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Subtle background decoration -->
+<div class="fixed inset-0 z-[-1] pointer-events-none overflow-hidden">
+<div class="absolute top-0 right-0 w-[800px] h-[800px] bg-primary-container/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3"></div>
+<div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-secondary-container/10 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/4"></div>
+<!-- Noise overlay for premium texture -->
+<div class="absolute inset-0 opacity-[0.015]" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');"></div>
+</div>
+<script>
+        // Simple interaction for the Select Multiple toggle
+        document.getElementById('selectMultipleToggle')?.addEventListener('change', function(e) {
+            const containers = document.querySelectorAll('.bulk-checkbox-container');
+            containers.forEach(container => {
+                if(e.target.checked) {
+                    container.classList.remove('opacity-0', 'w-0', 'pointer-events-none');
+                    container.classList.add('opacity-100', 'w-auto');
+                } else {
+                    container.classList.add('opacity-0', 'w-0', 'pointer-events-none');
+                    container.classList.remove('opacity-100', 'w-auto');
+                }
+            });
+            // Card selection state styling toggle could be added here
+        });
+    </script>
+</body></html>

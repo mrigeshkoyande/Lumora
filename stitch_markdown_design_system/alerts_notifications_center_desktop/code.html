@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Arogya OS - Alerts &amp; Notifications</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#8ecdff",
+                        "secondary-fixed": "#83f4fc",
+                        "on-surface-variant": "#3e4851",
+                        "surface": "#eefcfd",
+                        "surface-tint": "#006494",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#94d1d3",
+                        "background": "#eefcfd",
+                        "surface-dim": "#cfddde",
+                        "primary": "#006494",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#263334",
+                        "inverse-on-surface": "#e5f3f4",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#b0edef",
+                        "on-tertiary-fixed": "#002021",
+                        "inverse-primary": "#8ecdff",
+                        "primary-container": "#3ab5ff",
+                        "on-secondary-fixed": "#002022",
+                        "on-primary-fixed": "#001e30",
+                        "tertiary": "#286769",
+                        "secondary": "#00696e",
+                        "surface-container-highest": "#d7e5e6",
+                        "primary-fixed": "#cbe6ff",
+                        "on-primary-fixed-variant": "#004b71",
+                        "secondary-fixed-dim": "#64d7df",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#d7e5e6",
+                        "on-secondary-container": "#006e73",
+                        "tertiary-container": "#7ab6b8",
+                        "on-tertiary-container": "#00484a",
+                        "on-surface": "#111e1f",
+                        "surface-container-low": "#e8f6f7",
+                        "surface-container-high": "#ddebec",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#034f51",
+                        "on-primary-container": "#004466",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "surface-bright": "#eefcfd",
+                        "surface-container": "#e3f1f2",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#80f1f9",
+                        "outline": "#6f7882",
+                        "on-background": "#111e1f",
+                        "on-secondary-fixed-variant": "#004f53",
+                        "outline-variant": "#bec8d2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "container-max": "1280px",
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "display-lg": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #eefcfd; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+        .glass-row {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        .glass-row:hover {
+            background: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 100, 148, 0.08);
+        }
+        .switch-peer:checked ~ .switch-track {
+            background-color: #006494; /* primary */
+        }
+        .switch-peer:checked ~ .switch-track .switch-thumb {
+            transform: translateX(100%);
+        }
+        .severity-critical { border-left: 4px solid #ba1a1a; }
+        .severity-medium { border-left: 4px solid #f59e0b; }
+        .severity-low { border-left: 4px solid #10b981; }
+        
+        /* Subtle animated gradient background to simulate liquid glass feel */
+        .bg-liquid {
+            background: linear-gradient(120deg, #eefcfd 0%, #cfddde 50%, #eefcfd 100%);
+            background-size: 200% 200%;
+            animation: gradientMove 15s ease infinite;
+        }
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body class="bg-liquid min-h-screen text-on-surface font-body-md overflow-x-hidden antialiased flex flex-col md:flex-row">
+<!-- BottomNavBar (Mobile) - Suppressed as per instructions for desktop layout, but included for responsive adherence -->
+<nav class="fixed bottom-0 w-full md:hidden z-50 rounded-t-lg border-t border-white/20 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] bg-surface/60 dark:bg-inverse-surface/60 backdrop-blur-lg fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 pb-safe text-primary dark:text-primary-fixed-dim font-label-sm text-label-sm">
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:bg-primary/5 scale-110 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:bg-primary/5 scale-110 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="medical_information">medical_information</span>
+<span class="mt-1">Health</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:bg-primary/5 scale-110 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="mt-1">Supply</span>
+</a>
+<!-- Using Profile as active placeholder since Alerts isn't a top-level tab in JSON -->
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-3 py-1 active:bg-primary/5 scale-110 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span class="mt-1">Profile</span>
+</a>
+</nav>
+<!-- SideNavBar (Desktop) -->
+<nav class="h-screen w-64 fixed left-0 top-0 hidden md:flex flex-col border-r border-white/20 dark:border-white/10 shadow-md bg-surface/40 dark:bg-inverse-surface/40 backdrop-blur-3xl flex flex-col p-4 gap-y-4 text-primary dark:text-primary-fixed-dim z-50">
+<div class="flex items-center gap-3 mb-8 px-4 mt-4">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden">
+<img alt="Organization Logo" class="w-full h-full object-cover" data-alt="A minimalist abstract organization logo featuring a stylized geometric shield in shades of deep blue and crisp white, conveying trust and healthcare security. High-key lighting, modern corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOhs--n_XK0LQL52ZE53pnsfSeqmT8IDmRZS3xKnX0D5qGHMpULptFWGyZmkVHDZ_P7Td3yAObnsNz0n9qYl-kUWyv-Jmg-9b6pjBdQnRIswi9JYEDCVZeuDPW2paPXviLYH5ijGZGVOmRzh6Mk9A0Zw8dj1HecpHRTPxJp8OiF7W1CHVkkcv0SKvz-nuuNL5BGVHIk5fq8a9MXm_YToJ33_he6diZEWmtQpl3XeHO_CSMQ23UyK0JmagXhDZV9kDwzxosBtKiMEc"/>
+</div>
+<div>
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">Arogya OS</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Health Management</p>
+</div>
+</div>
+<div class="flex flex-col gap-2 flex-grow">
+<!-- Alert center isn't a direct tab, highlighting Dashboard as root context -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg font-label-sm text-label-sm bg-primary/20 text-primary border-r-4 border-primary hover:bg-primary/10 transition-all hover:translate-x-1 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg font-label-sm text-label-sm text-on-surface-variant hover:bg-primary/10 transition-all hover:translate-x-1 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="medical_services">medical_services</span>
+                Health Center
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg font-label-sm text-label-sm text-on-surface-variant hover:bg-primary/10 transition-all hover:translate-x-1 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="local_shipping">local_shipping</span>
+                Supply Chain
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg font-label-sm text-label-sm text-on-surface-variant hover:bg-primary/10 transition-all hover:translate-x-1 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+                AI Insights
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg font-label-sm text-label-sm text-on-surface-variant hover:bg-primary/10 transition-all hover:translate-x-1 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+                Reports
+            </a>
+</div>
+<button class="mt-auto mb-4 bg-primary text-on-primary py-3 rounded-lg font-label-sm text-label-sm shadow-sm hover:opacity-90 transition-opacity">
+            New Entry
+        </button>
+<div class="flex flex-col gap-2 mt-4 pt-4 border-t border-white/20">
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg font-label-sm text-label-sm text-on-surface-variant hover:bg-primary/10 transition-all hover:translate-x-1 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+                Help
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg font-label-sm text-label-sm text-on-surface-variant hover:bg-primary/10 transition-all hover:translate-x-1 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+                Logout
+            </a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 md:ml-64 flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<header class="w-full h-16 sticky top-0 z-40 border-b border-white/20 dark:border-white/10 shadow-sm bg-surface/40 dark:bg-inverse-surface/40 backdrop-blur-2xl flex justify-between items-center px-margin-desktop w-full text-primary dark:text-primary-fixed-dim font-body-md text-body-md">
+<div class="flex items-center">
+<!-- Search bar left intent -->
+<div class="relative hidden sm:block w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input class="w-full pl-10 pr-4 py-2 rounded-full bg-white/40 border border-white/60 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder-on-surface-variant/70 text-sm" placeholder="Search alerts..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button aria-label="Notifications" class="p-2 rounded-full hover:bg-white/10 transition-colors cursor-pointer active:scale-95 duration-200 relative text-primary font-bold border-b-2 border-primary">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button aria-label="Settings" class="p-2 rounded-full hover:bg-white/10 transition-colors cursor-pointer active:scale-95 duration-200 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary/20 overflow-hidden cursor-pointer active:scale-95 duration-200">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a healthcare administrator, soft natural lighting, set against a pristine, blurred modern clinic background. Bright, trustworthy aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-Ap-ZnRMlndvjKu_fNBONgKuZk95HjnutH9Jm8kaEz9YjiYoJ_5036WBWeHGlGVEZgAXTSXAcWPN2_MiPVM41U6VJf3h3cr5al3LnfbwRfLhaB3zcLX9ThWIAPn8XfT1evoe36OyWgg2MIayWX9BB-Q1J6SVZwPJ7QkPBtyQXiP2_uih0fYtmHQMe4GUKJHFTxdjXcZmBqO1TNsq9GwwBiKIp9F17ymm0gwJvPMNcZf4WlbrS2P4XYMD_cHe7xxC-D0Mo59tE6HU"/>
+</div>
+</div>
+</header>
+<!-- Page Canvas -->
+<main class="flex-1 p-6 md:p-gutter max-w-container-max mx-auto w-full pb-24 md:pb-6">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary tracking-tight mb-2">Alerts &amp; Notifications</h2>
+<p class="text-on-surface-variant text-sm">Manage and review system-generated events across facilities.</p>
+</div>
+<button class="glass-panel px-4 py-2 rounded-lg text-sm font-semibold text-primary hover:bg-primary/5 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="done_all">done_all</span>
+                    Mark all as read
+                </button>
+</div>
+<!-- Preferences Control Strip (Glass Panel) -->
+<div class="glass-panel rounded-xl p-4 mb-8 flex flex-wrap gap-6 items-center justify-between">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-primary" data-icon="tune">tune</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Delivery Preferences</span>
+</div>
+<div class="flex flex-wrap gap-8">
+<label class="flex items-center gap-3 cursor-pointer">
+<span class="text-sm font-medium">Push</span>
+<div class="relative">
+<input checked="" class="sr-only switch-peer" type="checkbox"/>
+<div class="switch-track w-10 h-6 bg-outline-variant rounded-full transition-colors duration-200">
+<div class="switch-thumb absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform duration-200 shadow-sm"></div>
+</div>
+</div>
+</label>
+<label class="flex items-center gap-3 cursor-pointer">
+<span class="text-sm font-medium">Email</span>
+<div class="relative">
+<input checked="" class="sr-only switch-peer" type="checkbox"/>
+<div class="switch-track w-10 h-6 bg-outline-variant rounded-full transition-colors duration-200">
+<div class="switch-thumb absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform duration-200 shadow-sm"></div>
+</div>
+</div>
+</label>
+<label class="flex items-center gap-3 cursor-pointer">
+<span class="text-sm font-medium">SMS</span>
+<div class="relative">
+<input class="sr-only switch-peer" type="checkbox"/>
+<div class="switch-track w-10 h-6 bg-outline-variant rounded-full transition-colors duration-200">
+<div class="switch-thumb absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform duration-200 shadow-sm"></div>
+</div>
+</div>
+</label>
+</div>
+</div>
+<div class="flex flex-col lg:flex-row gap-6">
+<!-- Sidebar Filters -->
+<aside class="w-full lg:w-72 flex-shrink-0">
+<div class="glass-panel rounded-xl p-6 sticky top-24">
+<h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-6 border-b border-white/40 pb-2">Filters</h3>
+<!-- Facility Selector -->
+<div class="mb-6">
+<label class="block text-sm font-semibold mb-2">Facility</label>
+<select class="w-full bg-white/40 border border-white/60 rounded-lg p-2.5 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none">
+<option>All Facilities</option>
+<option>Central Hospital East</option>
+<option>North Wing Clinic</option>
+<option>Downtown Storage Hub</option>
+</select>
+</div>
+<!-- Domain Checkboxes -->
+<div class="mb-6">
+<label class="block text-sm font-semibold mb-3">Domain</label>
+<div class="space-y-3">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="w-4 h-4 rounded text-primary bg-white/50 border-white/60 focus:ring-primary focus:ring-offset-0" type="checkbox"/>
+<span class="text-sm group-hover:text-primary transition-colors">Stock</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="w-4 h-4 rounded text-primary bg-white/50 border-white/60 focus:ring-primary focus:ring-offset-0" type="checkbox"/>
+<span class="text-sm group-hover:text-primary transition-colors">Bed Availability</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="w-4 h-4 rounded text-primary bg-white/50 border-white/60 focus:ring-primary focus:ring-offset-0" type="checkbox"/>
+<span class="text-sm group-hover:text-primary transition-colors">Staffing</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 rounded text-primary bg-white/50 border-white/60 focus:ring-primary focus:ring-offset-0" type="checkbox"/>
+<span class="text-sm group-hover:text-primary transition-colors">Footfall</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 rounded text-primary bg-white/50 border-white/60 focus:ring-primary focus:ring-offset-0" type="checkbox"/>
+<span class="text-sm group-hover:text-primary transition-colors">Public Health</span>
+</label>
+</div>
+</div>
+<!-- Severity -->
+<div class="mb-6">
+<label class="block text-sm font-semibold mb-3">Severity</label>
+<div class="flex flex-wrap gap-2">
+<button class="px-3 py-1 rounded-full text-xs font-medium border border-error text-error bg-error/10 hover:bg-error/20 transition-colors">Critical</button>
+<button class="px-3 py-1 rounded-full text-xs font-medium border border-[#f59e0b] text-[#f59e0b] bg-[#f59e0b]/10 hover:bg-[#f59e0b]/20 transition-colors">Medium</button>
+<button class="px-3 py-1 rounded-full text-xs font-medium border border-[#10b981] text-[#10b981] bg-[#10b981]/10 hover:bg-[#10b981]/20 transition-colors">Low</button>
+</div>
+</div>
+<!-- Status -->
+<div>
+<label class="block text-sm font-semibold mb-3">Status</label>
+<div class="flex flex-wrap gap-2">
+<button class="px-3 py-1 rounded-full text-xs font-medium bg-primary text-white">New</button>
+<button class="px-3 py-1 rounded-full text-xs font-medium border border-outline bg-white/30 hover:bg-white/50 transition-colors">Acknowledged</button>
+<button class="px-3 py-1 rounded-full text-xs font-medium border border-outline bg-white/30 hover:bg-white/50 transition-colors">Resolved</button>
+</div>
+</div>
+</div>
+</aside>
+<!-- Alert Feed -->
+<div class="flex-1 space-y-4">
+<!-- Alert Row: Critical -->
+<div class="glass-row rounded-xl p-4 flex items-center gap-4 severity-critical relative group cursor-pointer">
+<div class="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-secondary"></div> <!-- Unread indicator -->
+<div class="w-12 h-12 rounded-full bg-error/10 flex items-center justify-center text-error flex-shrink-0">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-baseline justify-between mb-1">
+<h4 class="font-semibold text-base truncate pr-4 text-on-surface">Stock-out Risk: Paracetamol 500mg</h4>
+<span class="text-xs text-on-surface-variant whitespace-nowrap font-mono tabular-nums">10:42 AM</span>
+</div>
+<div class="flex items-center gap-3 text-sm text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]" data-icon="domain">domain</span> Central Hospital East</span>
+<span>•</span>
+<span class="text-error font-medium">Critical</span>
+</div>
+</div>
+<div class="opacity-0 group-hover:opacity-100 transition-opacity duration-200 pr-2">
+<button class="text-primary hover:text-primary-container text-sm font-semibold flex items-center gap-1">
+                                View <span class="material-symbols-outlined text-[18px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Alert Row: Medium -->
+<div class="glass-row rounded-xl p-4 flex items-center gap-4 severity-medium relative group cursor-pointer">
+<div class="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-secondary"></div> <!-- Unread indicator -->
+<div class="w-12 h-12 rounded-full bg-[#f59e0b]/10 flex items-center justify-center text-[#f59e0b] flex-shrink-0">
+<span class="material-symbols-outlined" data-icon="bed">bed</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-baseline justify-between mb-1">
+<h4 class="font-semibold text-base truncate pr-4 text-on-surface">ICU Bed Capacity at 85%</h4>
+<span class="text-xs text-on-surface-variant whitespace-nowrap font-mono tabular-nums">09:15 AM</span>
+</div>
+<div class="flex items-center gap-3 text-sm text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]" data-icon="domain">domain</span> North Wing Clinic</span>
+<span>•</span>
+<span class="text-[#f59e0b] font-medium">Medium</span>
+</div>
+</div>
+<div class="opacity-0 group-hover:opacity-100 transition-opacity duration-200 pr-2">
+<button class="text-primary hover:text-primary-container text-sm font-semibold flex items-center gap-1">
+                                View <span class="material-symbols-outlined text-[18px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Alert Row: Low (Read) -->
+<div class="glass-row rounded-xl p-4 flex items-center gap-4 severity-low relative group cursor-pointer opacity-80">
+<div class="w-12 h-12 rounded-full bg-[#10b981]/10 flex items-center justify-center text-[#10b981] flex-shrink-0">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-baseline justify-between mb-1">
+<h4 class="font-semibold text-base truncate pr-4 text-on-surface">Shift swap request pending approval</h4>
+<span class="text-xs text-on-surface-variant whitespace-nowrap font-mono tabular-nums">Yesterday, 14:30</span>
+</div>
+<div class="flex items-center gap-3 text-sm text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]" data-icon="domain">domain</span> Central Hospital East</span>
+<span>•</span>
+<span class="text-[#10b981] font-medium">Low</span>
+</div>
+</div>
+<div class="opacity-0 group-hover:opacity-100 transition-opacity duration-200 pr-2">
+<button class="text-primary hover:text-primary-container text-sm font-semibold flex items-center gap-1">
+                                View <span class="material-symbols-outlined text-[18px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Alert Row: Critical (Read) -->
+<div class="glass-row rounded-xl p-4 flex items-center gap-4 severity-critical relative group cursor-pointer opacity-80">
+<div class="w-12 h-12 rounded-full bg-error/10 flex items-center justify-center text-error flex-shrink-0">
+<span class="material-symbols-outlined" data-icon="coronavirus">coronavirus</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-baseline justify-between mb-1">
+<h4 class="font-semibold text-base truncate pr-4 text-on-surface">Unusual spike in respiratory cases detected</h4>
+<span class="text-xs text-on-surface-variant whitespace-nowrap font-mono tabular-nums">Yesterday, 08:00</span>
+</div>
+<div class="flex items-center gap-3 text-sm text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]" data-icon="public">public</span> Region 4 Public Health</span>
+<span>•</span>
+<span class="text-error font-medium">Critical</span>
+</div>
+</div>
+<div class="opacity-0 group-hover:opacity-100 transition-opacity duration-200 pr-2">
+<button class="text-primary hover:text-primary-container text-sm font-semibold flex items-center gap-1">
+                                View <span class="material-symbols-outlined text-[18px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
