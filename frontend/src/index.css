@@ -149,61 +149,53 @@ body {
 
 /* Level 2: Cards / Content Surfaces */
 .glass-card {
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  background: #ffffff;
+  border: 1px solid rgba(11, 37, 69, 0.08);
   border-radius: 20px;
-  box-shadow: 0 8px 32px 0 rgba(11, 37, 69, 0.05);
+  box-shadow: 0 4px 20px 0 rgba(11, 37, 69, 0.04);
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
               box-shadow 0.4s ease,
               background 0.3s ease;
 }
 .glass-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 40px 0 rgba(11, 37, 69, 0.08);
-  background: rgba(255, 255, 255, 0.65);
+  box-shadow: 0 8px 30px 0 rgba(11, 37, 69, 0.08);
+  background: #ffffff;
 }
 .glass-card-static {
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  background: #ffffff;
+  border: 1px solid rgba(11, 37, 69, 0.08);
   border-radius: 20px;
-  box-shadow: 0 8px 32px 0 rgba(11, 37, 69, 0.05);
+  box-shadow: 0 4px 20px 0 rgba(11, 37, 69, 0.04);
 }
 
 /* Level 2b: Glass Panel (non-hovering) */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: #ffffff;
+  border: 1px solid rgba(11, 37, 69, 0.08);
   border-radius: 20px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 24px rgba(11, 37, 69, 0.04);
 }
 
 /* Level 3: Navbar / Header glass */
 .glass-nav {
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(32px) saturate(180%);
-  -webkit-backdrop-filter: blur(32px) saturate(180%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 2px 16px rgba(11, 37, 69, 0.05);
+  background: #ffffff;
+  border-bottom: 1px solid rgba(11, 37, 69, 0.08);
+  box-shadow: 0 2px 12px rgba(11, 37, 69, 0.03);
 }
 
 /* Input fields */
 .glass-input {
-  background: rgba(255, 255, 255, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  background: #ffffff;
+  border: 1px solid rgba(11, 37, 69, 0.12);
   transition: all 0.3s ease;
   outline: none;
   width: 100%;
 }
 .glass-input:focus {
-  background: rgba(255, 255, 255, 0.8);
+  background: #ffffff;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(0, 100, 148, 0.15);
+  box-shadow: 0 0 0 3px rgba(0, 100, 148, 0.1);
 }
 .glass-input::placeholder {
   color: var(--color-outline);
@@ -211,27 +203,52 @@ body {
 
 /* List rows */
 .glass-row {
-  background: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: #ffffff;
+  border: 1px solid rgba(11, 37, 69, 0.06);
   border-radius: 12px;
   transition: all 0.25s ease;
 }
 .glass-row:hover {
-  background: rgba(255, 255, 255, 0.6);
+  background: var(--color-surface-container-lowest);
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 100, 148, 0.08);
+  box-shadow: 0 6px 16px rgba(0, 100, 148, 0.06);
 }
 
 /* Sidebar glass */
 .glass-sidebar {
-  background: rgba(238, 252, 253, 0.6);
-  backdrop-filter: blur(32px) saturate(160%);
-  -webkit-backdrop-filter: blur(32px) saturate(160%);
-  border-right: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 4px 0 20px rgba(11, 37, 69, 0.05);
+  background: transparent;
+  border-right: 1px solid rgba(11, 37, 69, 0.08);
+  box-shadow: 2px 0 12px rgba(11, 37, 69, 0.03);
 }
+
+.glass-sidebar .glass-surface__content {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Collapsed Sidebar Item Highlights */
+.glass-sidebar-collapsed .nav-item {
+  justify-content: center !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  gap: 0 !important;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.glass-sidebar-collapsed .nav-item:hover {
+  transform: scale(1.06) !important;
+}
+
+.glass-sidebar-collapsed .nav-item.active {
+  background: var(--color-primary) !important;
+}
+
 
 /* ============================================================
    SEVERITY INDICATORS
@@ -430,11 +447,25 @@ body {
   transform: translateX(2px);
 }
 .nav-item.active {
-  background: rgba(0, 100, 148, 0.15);
-  color: var(--color-primary);
-  border-left: 3px solid var(--color-primary);
+  background: var(--color-primary);
+  color: #ffffff !important;
   font-weight: 600;
-  padding-left: 13px;
+  padding-left: 16px;
+  box-shadow: 0 4px 12px rgba(0, 100, 148, 0.15);
+}
+
+.nav-item.active .material-symbols-outlined {
+  color: #ffffff !important;
+}
+
+.sidebar-group-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-on-surface-variant);
+  opacity: 0.55;
+  padding: 1.25rem 0.75rem 0.35rem;
 }
 
 /* ============================================================

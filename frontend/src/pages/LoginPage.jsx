@@ -30,7 +30,7 @@ export default function LoginPage() {
     // Mock delay
     await new Promise((r) => setTimeout(r, 800));
     login(email);
-    navigate('/dashboard');
+    navigate('/onboarding');
   };
 
   const handlePinSignIn = async (e) => {
@@ -44,7 +44,7 @@ export default function LoginPage() {
     setError('');
     await new Promise((r) => setTimeout(r, 600));
     login('admin@arogya.gov.in');
-    navigate('/dashboard');
+    navigate('/onboarding');
   };
 
   const handlePinInput = (val, idx) => {

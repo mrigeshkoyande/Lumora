@@ -8,7 +8,7 @@ An autonomous, location-based multi-agent intelligence system built to analyze a
 
 The workspace is organized into two primary components:
 1. **`backend`**: A FastAPI service that integrates external APIs (OpenWeatherMap, NewsAPI) and feeds structured context into a Groq-powered LLM agent pipeline.
-2. **`frontend`**: Reserved scaffold for the interactive community health dashboard.
+2. **`frontend`**: A React + Vite single-page application representing the interactive community health dashboard, styled with a modern Liquid Glass design system.
 
 ```
 code_for_communities/
@@ -26,8 +26,23 @@ code_for_communities/
 │   ├── main1.py                   # App entrypoint importer
 │   ├── run.py                     # Local development startup script
 │   └── requirements.txt           # Python package dependencies
-└── frontend/                      # User Interface (Future Implementation)
-    └── readme.md                  # Frontend scaffold readme
+└── frontend/                      # User Interface (React + Vite App)
+    ├── src/
+    │   ├── api/
+    │   │   └── client.js          # Fetch client communicating with backend
+    │   ├── components/
+    │   │   ├── layout/            # PageShell, Sidebar, TopNavbar layout components
+    │   │   └── ui/                # GlassSurface, KPITile, SeverityBadge, StatusComponents
+    │   ├── context/
+    │   │   └── AuthContext.jsx    # Authentication state context
+    │   ├── hooks/                 # Custom React hooks
+    │   ├── pages/                 # Dashboard pages (11 screens total)
+    │   ├── App.jsx                # Routing and application entry point
+    │   ├── index.css              # Custom styling and design tokens
+    │   └── main.jsx               # Vite bootstrap file
+    ├── index.html                 # HTML root template
+    ├── package.json               # NPM dependencies and scripts
+    └── vite.config.js             # Vite bundler configuration
 ```
 
 ---
@@ -226,9 +241,39 @@ Once running, the interactive API documentation (Swagger UI) is available at:
 
 ---
 
-## 🌐 Frontend Status
+## 🌐 Frontend Implementation
 
-The [frontend/](file:///d:/Users/Desktop/code_for_communities/frontend) directory is currently scaffolded. A basic placeholder [readme.md](file:///d:/Users/Desktop/code_for_communities/frontend/readme.md) resides there. The next logical phase of development involves establishing a modern web UI (e.g., using Vite + React or pure Vanilla JS/HTML/CSS) to communicate with the streaming and REST endpoints of the backend API, visualising:
-- Current environmental safety metrics.
-- Global outbreak news monitoring.
-- Interactive multi-agent threat recommendations.
+The frontend is a fully-featured React + Vite application that serves as the interactive dashboard for Arogya OS.
+
+### 💎 Liquid Glass Design System
+The interface uses a premium **Liquid Glass (Glassmorphism)** design aesthetic, implemented via a custom `GlassSurface` component that leverages backdrop filters, saturation adjustments, subtle border highlights, and CSS variables for a modern, fluid visual experience.
+
+### 📱 Core Pages & Features
+The dashboard includes the following 11 views:
+*   **Login**: Simple authentication gateway to protect application data.
+*   **Onboarding**: Multi-step configuration flow to set up user profiles and preferences.
+*   **Dashboard**: Main control panel showing environmental safety metrics, AQI snapshot, and LLM-generated health risk alerts.
+*   **Stock & Bed Management**: Track medical stock availability, bed occupancy levels, and set alert thresholds.
+*   **Staff & Facilities**: Manage local healthcare staff logs and PHC/CHC facility information.
+*   **Alerts**: Inbox for early stock-out warnings, resource redistribution recommendation, and active threat notifications.
+*   **Simulation & Approvals**: Simulate potential demand surges or outbreaks, review scenarios, and approve redistribution tasks.
+*   **Settings**: General workspace configuration, API models, theme preferences, and credentials.
+
+### 🛠️ Frontend Setup
+
+#### 1. Navigate to the frontend directory:
+```bash
+cd frontend
+```
+
+#### 2. Install dependencies:
+```bash
+npm install
+```
+
+#### 3. Run the development server:
+```bash
+npm run dev
+```
+
+The application will run locally, usually on [http://localhost:5173](http://localhost:5173), and communicate with the FastAPI backend.

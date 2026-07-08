@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import LoginPage from './pages/LoginPage';
+import OnboardingPage from './pages/OnboardingPage';
 import DashboardPage from './pages/DashboardPage';
 import StockPage from './pages/StockPage';
 import BedManagementPage from './pages/BedManagementPage';
@@ -25,6 +26,14 @@ export default function App() {
           <Route path="/login" element={<LoginPage />} />
 
           {/* Protected routes */}
+          <Route
+            path="/onboarding"
+            element={
+              <PrivateRoute>
+                <OnboardingPage />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="/dashboard"
             element={

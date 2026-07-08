@@ -138,6 +138,50 @@ def snapshot(location: str):
     }
 
 
+@router.get("/hospitals/coverage", tags=["hospitals"], summary="Get zonewise hospital coverage and infrastructure data")
+def get_hospital_coverage():
+    import os
+    import csv
+    logger.info("Hospital coverage requested")
+    
+    hospital_data = {}
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+    
+    # Read D60. Zonewise Hospital Coverage.csv
+    csv_path_60 = os.path.join(base_dir, "D60. Zonewise Hospital Coverage.csv")
+    try:
+        with open(csv_path_60, mode="r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                zone = row.get("Zone Name", "").strip()
+                if zone:
+                    hospital_data[zone] = {
+                        "city": row.get("City Name", "").strip(),
+                        "zone_number": row.get("Zone Number", "").strip(),
+                        "zone": zone,
+                        "hospitals": int(row.get("No.of Hospitals/Nursing Homes", 0) or 0),
+                        "beds": int(row.get("No.of beds", 0) or 0),
+                        "stock_availability": float(row.get("Medicinal Stocks Availability (%)", 0) or 0),
+                        "ambulances": 0
+                    }
+    except Exception as e:
+        logger.warning(f"Could not load D60 hospital dataset: {e}")
+        
+    # Read D63. Zonewise Medical Infrastructure.csv
+    csv_path_63 = os.path.join(base_dir, "D63. Zonewise Medical Infrastructure.csv")
+    try:
+        with open(csv_path_63, mode="r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                zone = row.get("Zone Name", "").strip()
+                if zone and zone in hospital_data:
+                    hospital_data[zone]["ambulances"] = int(row.get("No of Ambulances", 0) or 0)
+    except Exception as e:
+        logger.warning(f"Could not load D63 hospital dataset: {e}")
+        
+    return list(hospital_data.values())
+
+
 @router.post("/webhook/alert", tags=["webhook"], summary="Trigger autonomous AI analysis and SMS alert")
 async def webhook_alert(req: SurveillanceRequest):
     logger.info("Webhook alert triggered for location=%s", req.location)

@@ -69,6 +69,11 @@ export async function snapshot(location) {
   return request(`/snapshot?location=${encodeURIComponent(location)}`);
 }
 
+/** GET /hospitals/coverage — Fetch Chennai hospital coverage data */
+export async function getHospitalCoverage() {
+  return request('/hospitals/coverage');
+}
+
 /**
  * POST /webhook/alert — Run AI analysis AND dispatch Twilio SMS alert
  * @param {string} location
@@ -88,6 +93,7 @@ export const api = {
   analyze,
   analyzeStream,
   snapshot,
+  getHospitalCoverage,
   webhookAlert,
 };
 
