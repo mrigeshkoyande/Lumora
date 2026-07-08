@@ -52,7 +52,7 @@ export default function Sidebar({ collapsed = false, mobileOpen = false, onClose
         width="100%"
         height="100%"
         borderRadius={24}
-        backgroundOpacity={0.03}
+        backgroundOpacity={0.16}
         saturation={1.3}
         brightness={50}
         blur={12}

@@ -62,7 +62,7 @@ export default function TopNavbar({
           width="100%"
           height="100%"
           borderRadius={20}
-          backgroundOpacity={0.03}
+          backgroundOpacity={0.16}
           saturation={1.3}
           brightness={50}
           blur={12}
@@ -162,7 +162,7 @@ export default function TopNavbar({
           width="100%"
           height="100%"
           borderRadius={16}
-          backgroundOpacity={0.03}
+          backgroundOpacity={0.16}
           saturation={1.3}
           brightness={50}
           blur={12}
