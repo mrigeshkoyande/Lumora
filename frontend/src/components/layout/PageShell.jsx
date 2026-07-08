@@ -37,8 +37,7 @@ export default function PageShell({ children, onLocationChange, currentLocation 
         onToggleCollapsed={() => setIsCollapsed(!isCollapsed)}
       />
 
-      {/* Main area */}
-      <div className={`flex flex-col flex-1 transition-all duration-300 ml-0 ${isCollapsed ? 'md:ml-[112px]' : 'md:ml-[288px]'}`}>
+      <div className={`flex flex-col flex-1 transition-[margin-left] duration-200 ease-out ml-0 ${isCollapsed ? 'md:ml-[112px]' : 'md:ml-[288px]'}`}>
         <TopNavbar
           onLocationChange={onLocationChange}
           currentLocation={currentLocation}

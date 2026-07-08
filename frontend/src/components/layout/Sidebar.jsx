@@ -40,7 +40,7 @@ export default function Sidebar({ collapsed = false, mobileOpen = false, onClose
 
   return (
     <aside
-      className={`fixed z-40 transition-all duration-300 flex flex-col
+      className={`fixed z-40 transition-[width,transform] duration-200 ease-out flex flex-col
         ${mobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'} 
         left-0 top-0 h-screen w-64
         md:left-4 md:top-4 md:h-[calc(100vh-32px)] 
@@ -61,7 +61,7 @@ export default function Sidebar({ collapsed = false, mobileOpen = false, onClose
       >
         {/* Logo & Collapse Button */}
         <div
-          className={`mb-8 flex items-center justify-between transition-all duration-300 ${collapsed ? 'justify-center px-0' : 'px-6'}`}
+          className={`mb-8 flex items-center justify-between transition-all duration-200 ease-out ${collapsed ? 'justify-center px-0' : 'px-6'}`}
           onClick={collapsed && onToggleCollapsed ? onToggleCollapsed : undefined}
           style={{ cursor: collapsed && onToggleCollapsed ? 'pointer' : 'default' }}
           title={collapsed ? "Expand sidebar" : undefined}

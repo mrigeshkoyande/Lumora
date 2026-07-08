@@ -50,7 +50,7 @@ export default function TopNavbar({
     <>
       {/* Desktop top bar */}
       <header
-        className="fixed top-4 right-4 z-30 hidden md:flex transition-all duration-300"
+        className="fixed top-4 right-4 z-30 hidden md:flex transition-[left,width] duration-200 ease-out"
         style={{
           left: isCollapsed ? 112 : 288,
           width: isCollapsed ? 'calc(100% - 128px)' : 'calc(100% - 304px)',
